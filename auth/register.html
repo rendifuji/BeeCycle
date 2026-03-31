@@ -11,6 +11,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../auth.css">
   </head>
   <body>
     <header class="navbar">
@@ -19,7 +20,63 @@
       </div>
     </header>
     <main>
+      <section class="hero">
+          <div class="hero-box">
+          <h2>BeeCycle</h2>
+          <h1>Welcome back to you campus marketplace</h1>
+          <p>Discover Deals, sell your old gear, and connect with other binusaians</p>
+          <div class="box-image">
+          <img src="../assets/Box.png" alt="box image">
+          </div>
+          <p class="add-info"><img src="../assets/icons/lock.svg" alt="lock icon">Exclusively for <strong>Binus.ac.id</strong> emails </p>
+        </div>
+        <form class="register-form">
+          <h1>Create an Account</h1>
+          <p>Already have an account? <a href="login.html">Log in here</a></p>
 
+          <div class="form-row full-width">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" placeholder="e.g. John Doe" required />
+          </div>
+
+          <div class="form-row two-col">
+            <div class="form-group">
+              <label for="email">Binus Email Address</label>
+              <input type="email" id="email" name="email" placeholder="name@binus.ac.id" required />
+            </div>
+            <div class="form-group">
+              <label for="studentId">Student ID (NIM)</label>
+              <input type="text" id="studentId" name="studentId" placeholder="290XXXXXXXX" required />
+            </div>
+          </div>
+
+          <div class="form-row two-col">
+            <div class="form-group">
+              <label for="campus">Home Campus</label>
+              <select id="campus" name="campus" required>
+                <option value="">Select your campus...</option>
+                <option value="Binus@Kemanggisan">Binus@Kemanggisan</option>
+                <option value="Binus@Alam Sutera">Binus@Alam Sutera</option>
+                <option value="Binus@Bekasi">Binus@Bekasi</option>
+                <option value="Binus@Malang">Binus@Malang</option>
+                <option value="Binus@Semarang">Binus@Semarang</option>
+                <option value="Binus@Bandung">Binus@Bandung</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="whatsapp">Whatsapp Number</label>
+              <input type="tel" id="whatsapp" name="whatsapp" placeholder="0812XXXXXXX" required />
+            </div>
+          </div>
+
+          <div class="form-row full-width">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Create a strong password" required />
+          </div>
+
+          <button type="submit">Create Account</button>
+        </form>
+      </section>
     </main>
 
     <footer>
@@ -29,5 +86,6 @@
         </p>
       </div>
     </footer>
+    <script src="../auth.js" defer></script>
   </body>
 </html>
