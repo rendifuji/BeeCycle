@@ -1,119 +1,102 @@
-const editProfileForm = document.querySelector(".edit-profile-form");
+const form = document.querySelector(".edit-profile-form");
 
-if (editProfileForm) {
-  const profileFields = {
-    email: document.getElementById("binus-email"),
-    studentId: document.getElementById("student-id"),
-    fullName: document.getElementById("full-name"),
-    campus: document.getElementById("campus-location"),
-    whatsapp: document.getElementById("whatsapp-number"),
-  };
 
-  const profileStatus = document.createElement("p");
-  profileStatus.className = "form-status";
-  profileStatus.setAttribute("aria-live", "polite");
-  editProfileForm.prepend(profileStatus);
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-  const setFieldState = (input, message) => {
-    const field = input.closest(".form-field");
-    if (!field) {
-      return;
-    }
+  const email = document.getElementById("binus-email").value.trim();
+  const studentId = document.getElementById("student-id").value.trim();
+  const fullName = document.getElementById("full-name").value.trim();
+  const campusLocation = document.getElementById("campus-location").value.trim();
+  const whatsappNumber = document.getElementById("whatsapp-number").value.trim();
 
-    let error = field.querySelector(".field-error");
-    if (!error) {
-      error = document.createElement("p");
-      error.className = "field-error";
-      field.append(error);
-    }
+  if (email === "") {
+    alert("Binus email is required");
+    return;
+  }
 
-    if (message) {
-      field.classList.add("has-error");
-      input.setAttribute("aria-invalid", "true");
-      error.textContent = message;
-    } else {
-      field.classList.remove("has-error");
-      input.removeAttribute("aria-invalid");
-      error.textContent = "";
-    }
-  };
+  const indexofat = email.indexOf("@");
+  const indexofdot = email.indexOf(".");
+  const indexoflastdot = email.lastIndexOf(".");
 
-  const validators = {
-    email(value) {
-      if (!value) return "Binus email is required.";
-      if (!/^[^\s@]+@binus\.ac\.id$/i.test(value)) {
-        return "Use a valid Binus email ending with @binus.ac.id.";
-      }
-      return "";
-    },
-    studentId(value) {
-      if (!value) return "Student ID / NIM is required.";
-      if (!/^\d{10}$/.test(value)) {
-        return "Student ID must contain exactly 10 digits.";
-      }
-      return "";
-    },
-    fullName(value) {
-      if (!value) return "Full name is required.";
-      if (value.trim().length < 6) {
-        return "Full name must be at least 6 characters.";
-      }
-      return "";
-    },
-    campus(value) {
-      if (!value) return "Please select your campus location.";
-      return "";
-    },
-    whatsapp(value) {
-      if (!value) return "WhatsApp number is required.";
-      const normalized = value.replace(/[^\d]/g, "");
-      if (normalized.length < 10 || normalized.length > 15) {
-        return "WhatsApp number must contain 10 to 15 digits.";
-      }
-      return "";
-    },
-  };
+  if (indexofat === -1 || indexofdot === -1) {
+    alert("Must be a valid email format");
+    return;
+  }
 
-  const validateProfileField = (input) => {
-    const value = input.value.trim();
-    let message = "";
+  if (indexofat === 0 || indexofdot === 0) {
+    alert("Email must not start with @ or .");
+    return;
+  }
 
-    if (input === profileFields.email) message = validators.email(value);
-    if (input === profileFields.studentId) message = validators.studentId(value);
-    if (input === profileFields.fullName) message = validators.fullName(value);
-    if (input === profileFields.campus) message = validators.campus(input.value);
-    if (input === profileFields.whatsapp) message = validators.whatsapp(value);
+  if (!(indexofat < indexoflastdot - 1)) {
+    alert("Email must have at least one character between @ and .");
+    return;
+  }
 
-    setFieldState(input, message);
-    return !message;
-  };
+  if (indexoflastdot === email.length - 1) {
+    alert("Email must not end with .");
+    return;
+  }
 
-  Object.values(profileFields).forEach((input) => {
-    input.addEventListener("input", () => {
-      validateProfileField(input);
-      profileStatus.textContent = "";
-      profileStatus.classList.remove("is-success");
-    });
+  if (email.includes(" ")) {
+    alert("Email must not contain spaces");
+    return;
+  }
 
-    input.addEventListener("blur", () => {
-      validateProfileField(input);
-    });
-  });
+  if (!email.toLowerCase().endsWith("@binus.ac.id")) {
+    alert("Email must end with @binus.ac.id");
+    return;
+  }
 
-  editProfileForm.addEventListener("submit", (event) => {
-    const isValid = Object.values(profileFields).every((input) => validateProfileField(input));
+  if (studentId === "") {
+    alert("Student ID / NIM is required");
+    return;
+  }
 
-    if (!isValid) {
-      event.preventDefault();
-      profileStatus.textContent = "Please fix the highlighted fields before submitting.";
-      const firstError = editProfileForm.querySelector("[aria-invalid='true']");
-      if (firstError) {
-        firstError.focus();
-      }
-      return;
-    }
+  if (!/^\d+$/.test(studentId)) {
+    alert("Student ID / NIM must contain numbers only");
+    return;
+  }
 
-    profileStatus.textContent = "Profile looks good. Redirecting to your dashboard...";
-    profileStatus.classList.add("is-success");
-  });
-}
+  if (studentId.length !== 10) {
+    alert("Student ID / NIM must be exactly 10 digits long");
+    return;
+  }
+
+  if (fullName === "") {
+    alert("Full name is required");
+    return;
+  }
+
+  if (fullName.length < 5) {
+    alert("Full name must be at least 5 characters long");
+    return;
+  }
+
+  if (campusLocation === "") {
+    alert("Campus location is required");
+    return;
+  }
+
+  if (whatsappNumber === "") {
+    alert("WhatsApp number is required");
+    return;
+  }
+
+  if (whatsappNumber.includes(" ")) {
+    alert("WhatsApp number must not contain spaces");
+    return;
+  }
+
+  const numericWhatsapp = whatsappNumber.replace(/\D/g, "");
+
+  if (numericWhatsapp.length < 10 || numericWhatsapp.length > 15) {
+    alert("WhatsApp number must be between 10 and 15 digits");
+    return;
+  }
+
+  alert("Profile updated successfully!");
+  form.submit();
+});
+
