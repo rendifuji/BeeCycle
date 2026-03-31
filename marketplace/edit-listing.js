@@ -1,129 +1,89 @@
-const editListingForm = document.querySelector(".edit-listing-form");
+const form = document.querySelector(".edit-listing-form");
 
-if (editListingForm) {
-  const listingFields = {
-    title: document.getElementById("item-title"),
-    category: document.getElementById("category"),
-    condition: document.getElementById("condition"),
-    price: document.getElementById("price"),
-    description: document.getElementById("description"),
-    campus: document.getElementById("campus-location"),
-    meetingSpot: document.getElementById("meeting-spot"),
-    photo: document.getElementById("item-photo"),
-  };
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-  const listingStatus = document.createElement("p");
-  listingStatus.className = "form-status";
-  listingStatus.setAttribute("aria-live", "polite");
-  editListingForm.prepend(listingStatus);
+  const itemTitle = document.getElementById("item-title").value.trim();
+  const category = document.getElementById("category").value.trim();
+  const condition = document.getElementById("condition").value.trim();
+  const price = document.getElementById("price").value.trim();
+  const description = document.getElementById("description").value.trim();
+  const campusLocation = document.getElementById("campus-location").value.trim();
+  const meetingSpot = document.getElementById("meeting-spot").value.trim();
+  const photoInput = document.getElementById("item-photo");
+  const photo = photoInput.files[0];
 
-  const setFieldState = (input, message) => {
-    const field = input.closest(".form-field");
-    if (!field) {
+  if (itemTitle === "") {
+    alert("Item title is required");
+    return;
+  }
+
+  if (itemTitle.length < 5) {
+    alert("Item title must be at least 5 characters long");
+    return;
+  }
+
+  if (category === "") {
+    alert("Category is required");
+    return;
+  }
+
+  if (condition === "") {
+    alert("Condition is required");
+    return;
+  }
+
+  if (price === "") {
+    alert("Price is required");
+    return;
+  }
+
+  const numericPrice = Number(price);
+
+  if (Number.isNaN(numericPrice) || numericPrice <= 0) {
+    alert("Price must be a valid number greater than 0");
+    return;
+  }
+
+  if (description === "") {
+    alert("Description is required");
+    return;
+  }
+
+  if (description.length < 20) {
+    alert("Description must be at least 20 characters long");
+    return;
+  }
+
+  if (campusLocation === "") {
+    alert("Campus location is required");
+    return;
+  }
+
+  if (meetingSpot === "") {
+    alert("Preferred meeting spot is required");
+    return;
+  }
+
+  if (meetingSpot.length < 3) {
+    alert("Preferred meeting spot must be at least 3 characters long");
+    return;
+  }
+
+  if (photo) {
+    const validExtensions = [".jpg", ".jpeg", ".png"];
+    const lowerCaseName = photo.name.toLowerCase();
+    const isValidPhoto = validExtensions.some((extension) =>
+      lowerCaseName.endsWith(extension)
+    );
+
+    if (!isValidPhoto) {
+      alert("Item photo must be a JPG or PNG file");
       return;
     }
+  }
 
-    let error = field.querySelector(".field-error");
-    if (!error) {
-      error = document.createElement("p");
-      error.className = "field-error";
-      field.append(error);
-    }
+  alert("Listing updated successfully!");
+  form.submit();
+});
 
-    if (message) {
-      field.classList.add("has-error");
-      input.setAttribute("aria-invalid", "true");
-      error.textContent = message;
-    } else {
-      field.classList.remove("has-error");
-      input.removeAttribute("aria-invalid");
-      error.textContent = "";
-    }
-  };
-
-  const validateListingField = (input) => {
-    const trimmed = input.value.trim();
-    let message = "";
-
-    if (input === listingFields.title) {
-      if (!trimmed) message = "Item title is required.";
-      else if (trimmed.length < 5) message = "Item title must be at least 5 characters.";
-    }
-
-    if (input === listingFields.category && !input.value) {
-      message = "Please choose a category.";
-    }
-
-    if (input === listingFields.condition && !input.value) {
-      message = "Please choose the item condition.";
-    }
-
-    if (input === listingFields.price) {
-      if (!trimmed) {
-        message = "Price is required.";
-      } else {
-        const numeric = Number(trimmed.replace(/[^\d]/g, ""));
-        if (!numeric) {
-          message = "Enter a valid price greater than 0.";
-        }
-      }
-    }
-
-    if (input === listingFields.description) {
-      if (!trimmed) message = "Description is required.";
-      else if (trimmed.length < 20) message = "Description must be at least 20 characters.";
-    }
-
-    if (input === listingFields.campus && !input.value) {
-      message = "Please choose a campus location.";
-    }
-
-    if (input === listingFields.meetingSpot) {
-      if (!trimmed) message = "Preferred meeting spot is required.";
-      else if (trimmed.length < 3) message = "Meeting spot must be at least 3 characters.";
-    }
-
-    if (input === listingFields.photo) {
-      const file = input.files?.[0];
-      if (file) {
-        const isImage = ["image/jpeg", "image/png"].includes(file.type);
-        const isSmallEnough = file.size <= 3 * 1024 * 1024;
-        if (!isImage) message = "Only JPG or PNG files are allowed.";
-        else if (!isSmallEnough) message = "Photo must be smaller than 3 MB.";
-      }
-    }
-
-    setFieldState(input, message);
-    return !message;
-  };
-
-  Object.values(listingFields).forEach((input) => {
-    const eventName = input === listingFields.photo ? "change" : "input";
-    input.addEventListener(eventName, () => {
-      validateListingField(input);
-      listingStatus.textContent = "";
-      listingStatus.classList.remove("is-success");
-    });
-
-    input.addEventListener("blur", () => {
-      validateListingField(input);
-    });
-  });
-
-  editListingForm.addEventListener("submit", (event) => {
-    const isValid = Object.values(listingFields).every((input) => validateListingField(input));
-
-    if (!isValid) {
-      event.preventDefault();
-      listingStatus.textContent = "Please complete the required fields before saving.";
-      const firstError = editListingForm.querySelector("[aria-invalid='true']");
-      if (firstError) {
-        firstError.focus();
-      }
-      return;
-    }
-
-    listingStatus.textContent = "Listing looks ready. Saving your changes...";
-    listingStatus.classList.add("is-success");
-  });
-}
