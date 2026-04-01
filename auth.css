@@ -232,7 +232,7 @@
 
 .alert {
   position: fixed;
-  bottom: 100px;
+  bottom: 120px;
   right: 20px;
   padding: 16px 20px;
   border-radius: 8px;
@@ -250,6 +250,12 @@
   background-color: #fee;
   color: #c33;
   border: 1px solid #fcc;
+}
+
+.alert-success {
+  background-color: #efe;
+  color: #363;
+  border: 1px solid #cfc;
 }
 
 @keyframes slideIn {
