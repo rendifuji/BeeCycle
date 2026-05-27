@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../marketplace.css" />
     <link rel="stylesheet" href="homepage.css">
+    <script src="homepage.js" defer></script>
   </head>
   <body>
     <header class="navbar">
@@ -21,7 +22,7 @@
         <nav>
           <div class="search">
             <img src="../assets/icons/search.svg" />
-            <input type="text" placeholder="Search for textbooks, electronics, etc..." />
+            <input type="text" id="name-search" onchange="search()" placeholder="Search for textbooks, electronics, etc..." />
           </div>
         </nav>
         <div class="buttons">
@@ -62,18 +63,21 @@
         <section class="listings">
           <nav>
             <h2>Fresh Listings</h2>
-            <select name="sort" id="Newest">
-
-              <option value="new">Sort By: Newest First</option>
-              <option value="old">Sort By: Oldest First</option>
-            </select>
+            <sorting>
+              <label for="sort">Sort By:</label>
+              <select name="sort" id="options">
+                <option value="placeholder" disabled hidden selected>Sort By:</option>
+                <option value="new">Newest First</option>
+                <option value="old">Oldest First</option>
+              </select>
+            </sorting>
           </nav>
           <div class="grid-container">
             <div class="card" onclick="window.location.href = 'product-detail.html'">
               <span class="like">Like New</span>
               <img src="../assets/headphones.jpeg" alt="">
               <span class="price">Rp. 1.850.000</span>
-              <h3>Sony WH-1000XM4 Wireless Headphones</h3>
+              <span class="name"><h3>Sony WH-1000XM4 Wireless Headphones</h3></span>
               <div class="cardbot"> 
                 <span>Kampus Anggrek</span>
                 <span>2 hrs ago</span>
@@ -83,7 +87,7 @@
               <span class="like">Like New</span>
               <img src="../assets/headphones.jpeg" alt="">
               <span class="price">Rp. 1.850.000</span>
-              <h3>Sony WH-1000XM4 Wireless Headphones</h3>
+              <span class="name"><h3>Sony WH-1000XM4 Wireless Headphones</h3></span>
               <div class="cardbot"> 
                 <span>Kampus Anggrek</span>
                 <span>2 hrs ago</span>
@@ -93,7 +97,7 @@
               <span class="like">Like New</span>
               <img src="../assets/headphones.jpeg" alt="">
               <span class="price">Rp. 1.850.000</span>
-              <h3>Sony WH-1000XM4 Wireless Headphones</h3>
+              <span class="name"><h3>Sony WH-1000XM4 Wireless Headphones</h3></span>
               <div class="cardbot"> 
                 <span>Kampus Anggrek</span>
                 <span>2 hrs ago</span>
@@ -103,7 +107,7 @@
               <span class="like">Like New</span>
               <img src="../assets/headphones.jpeg" alt="">
               <span class="price">Rp. 1.850.000</span>
-              <h3>Sony WH-1000XM4 Wireless Headphones</h3>
+              <span class="name"><h3>Sony WH-1000XM4 Wireless Headphones</h3></span>
               <div class="cardbot"> 
                 <span>Kampus Anggrek</span>
                 <span>2 hrs ago</span>
@@ -113,7 +117,7 @@
               <span class="like">Like New</span>
               <img src="../assets/headphones.jpeg" alt="">
               <span class="price">Rp. 1.850.000</span>
-              <h3>Sony WH-1000XM4 Wireless Headphones</h3>
+              <span class="name"><h3>Sony WH-1000XM4 Wireless Headphones</h3></span>
               <div class="cardbot"> 
                 <span>Kampus Anggrek</span>
                 <span>2 hrs ago</span>
@@ -123,7 +127,7 @@
               <span class="like">Like New</span>
               <img src="../assets/headphones.jpeg" alt="">
               <span class="price">Rp. 1.850.000</span>
-              <h3>Sony WH-1000XM4 Wireless Headphones</h3>
+              <span class="name"><h3>Sony WH-1000XM4 Wireless Headphones</h3></span>
               <div class="cardbot"> 
                 <span>Kampus Anggrek</span>
                 <span>2 hrs ago</span>
@@ -133,7 +137,7 @@
               <span class="like">Like New</span>
               <img src="../assets/headphones.jpeg" alt="">
               <span class="price">Rp. 1.850.000</span>
-              <h3>Sony WH-1000XM4 Wireless Headphones</h3>
+              <span class="name"><h3>Sony WH-1000XM4 Wireless Headphones</h3></span>
               <div class="cardbot"> 
                 <span>Kampus Anggrek</span>
                 <span>2 hrs ago</span>
@@ -143,7 +147,7 @@
               <span class="like">Like New</span>
               <img src="../assets/headphones.jpeg" alt="">
               <span class="price">Rp. 1.850.000</span>
-              <h3>Sony WH-1000XM4 Wireless Headphones</h3>
+              <span class="name"><h3>Sony WH-1000XM4 Wireless Headphones</h3></span>
               <div class="cardbot"> 
                 <span>Kampus Anggrek</span>
                 <span>2 hrs ago</span>
@@ -153,7 +157,7 @@
               <span class="like">Like New</span>
               <img src="../assets/headphones.jpeg" alt="">
               <span class="price">Rp. 1.850.000</span>
-              <h3>Sony WH-1000XM4 Wireless Headphones</h3>
+              <span class="name"><h3>Sony WH-1000XM4 Wireless Headphones</h3></span>
               <div class="cardbot"> 
                 <span>Kampus Anggrek</span>
                 <span>2 hrs ago</span>
@@ -163,7 +167,7 @@
               <span class="like">Like New</span>
               <img src="../assets/headphones.jpeg" alt="">
               <span class="price">Rp. 1.850.000</span>
-              <h3>Sony WH-1000XM4 Wireless Headphones</h3>
+              <span class="name"><h3>Sony WH-1000XM4 Wireless Headphones</h3></span>
               <div class="cardbot"> 
                 <span>Kampus Anggrek</span>
                 <span>2 hrs ago</span>
@@ -173,7 +177,7 @@
               <span class="like">Like New</span>
               <img src="../assets/headphones.jpeg" alt="">
               <span class="price">Rp. 1.850.000</span>
-              <h3>Sony WH-1000XM4 Wireless Headphones</h3>
+              <span class="name"><h3>Sony WH-1000XM4 Wireless Headphones</h3></span>
               <div class="cardbot"> 
                 <span>Kampus Anggrek</span>
                 <span>2 hrs ago</span>
@@ -183,7 +187,7 @@
               <span class="like">Like New</span>
               <img src="../assets/headphones.jpeg" alt="">
               <span class="price">Rp. 1.850.000</span>
-              <h3>Sony WH-1000XM4 Wireless Headphones</h3>
+              <span class="name"><h3>Sony WH-1000XM4 Wireless Headphones</h3></span>
               <div class="cardbot"> 
                 <span>Kampus Anggrek</span>
                 <span>2 hrs ago</span>
@@ -193,8 +197,6 @@
 
           </div>
         </section>
-
-
         </div>
       </div>
 

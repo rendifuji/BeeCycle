@@ -1,3 +1,8 @@
+<?php
+
+session_start();
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -12,6 +17,7 @@
     />
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../auth.css">
+    
   </head>
   <body>
     <header class="navbar">
@@ -30,11 +36,12 @@
           </div>
           <p class="add-info"><img src="../assets/icons/lock.svg" alt="lock icon">Exclusively for <strong>Binus.ac.id</strong> emails </p>
         </div>
-        <form class="login-form">
-          <h2>Login</h2>
-          <p>New to BeeCycle? <a href="register.html">Create an Account</a></p>
 
-          <label for="Email">Binus Email Address</label>
+        <form method="post" action="processLogIn.php" class="login-form">
+          <h2>Login</h2>
+          <p>New to BeeCycle? <a href="register.php">Create an Account</a></p>
+
+          <label for="email">Binus Email Address</label>
           <input type="email" id="email" name="email" required placeholder="name@binus.ac.id" />
 
           <label for="password">Password</label>
@@ -59,6 +66,6 @@
       </div>
     </footer>
 
-    <script src="../auth.js" defer></script>
+    <!-- <script src="../auth.js" defer></script> -->
   </body>
 </html>

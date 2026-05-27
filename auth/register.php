@@ -1,3 +1,38 @@
+<?php
+session_start();
+include  __DIR__.'/../db_connection.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $fullName = $_POST['fullName'];
+    $email = $_POST['email'];
+    $studentID = $_POST['studentID'];
+    $campus = $_POST['campus'];
+    $whatsapp = $_POST['whatsapp'];
+    $hashedPassword = $_POST['password'];
+
+    $stmt = $conn->prepare("INSERT INTO user
+    (fullName, email, studentID, campus, whatsapp, password)
+    VALUES (?, ?, ?, ?, ?, ?)");
+
+    $stmt->bind_param(
+        "ssssss",
+        $fullName,
+        $email,
+        $studentID,
+        $campus,
+        $whatsapp,
+        $hashedPassword
+    );
+
+    $stmt->execute();
+
+    $stmt->close();
+    $conn->close();
+
+    exit();
+}
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -10,29 +45,38 @@
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../auth.css">
   </head>
   <body>
+
     <header class="navbar">
+
       <div class="container">
         <a href="/" class="logo"><span>Bee</span>Cycle</a>
       </div>
+
     </header>
     <main>
+
       <section class="hero">
-          <div class="hero-box">
+
+        <div class="hero-box">
           <h2>BeeCycle</h2>
           <h1>Welcome back to you campus marketplace</h1>
           <p>Discover Deals, sell your old gear, and connect with other binusaians</p>
+
           <div class="box-image">
           <img src="../assets/Box.png" alt="box image">
           </div>
+
           <p class="add-info"><img src="../assets/icons/lock.svg" alt="lock icon">Exclusively for <strong>Binus.ac.id</strong> emails </p>
         </div>
-        <form class="register-form">
+
+        <form class="register-form" method="post" action="processRegister.php">
           <h1>Create an Account</h1>
-          <p>Already have an account? <a href="login.html">Log in here</a></p>
+          <p>Already have an account? <a href="logIn.php">Log in here</a></p>
 
           <div class="form-row full-width">
             <label for="fullName">Full Name</label>
@@ -44,9 +88,10 @@
               <label for="email">Binus Email Address</label>
               <input type="email" id="email" name="email" placeholder="name@binus.ac.id" required />
             </div>
+
             <div class="form-group">
-              <label for="studentId">Student ID (NIM)</label>
-              <input type="text" id="studentId" name="studentId" placeholder="290XXXXXXXX" required />
+              <label for="studentID">Student ID (NIM)</label>
+              <input type="text" id="studentID" name="studentID" placeholder="290XXXXXXXX" required />
             </div>
           </div>
 
@@ -63,6 +108,7 @@
                 <option value="Binus@Bandung">Binus@Bandung</option>
               </select>
             </div>
+
             <div class="form-group">
               <label for="whatsapp">Whatsapp Number</label>
               <input type="tel" id="whatsapp" name="whatsapp" placeholder="0812XXXXXXX" required />
@@ -75,21 +121,25 @@
           </div>
 
           <button type="submit">Create Account</button>
+
         </form>
       </section>
     </main>
 
     <div class="alert alert-error hidden" id="registerAlert">
-      Invalid email or password. Please try again.
+      Please try again.
     </div>
 
     <footer>
+
       <div class="container">
         <p class="copyright">
           &copy; 2026 BeeCycle Marketplace. All rights reserved.
         </p>
       </div>
+
     </footer>
-    <script src="../regist-auth.js" defer></script>
+    <!-- <script src="../regist-auth.js" defer></script> -->
   </body>
-</html>
+</html> 
+
