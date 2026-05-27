@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db_connection.php';
+include  __DIR__.'/../db_connection.php';
 $errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $conn->close();
             
 
-            header("Location: dashboard.php");
+            header("Location: ../admin/dashboard.html");
             exit();
         } else {
             $errors[] = "Invalid email or password!";

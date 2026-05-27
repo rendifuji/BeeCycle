@@ -1,0 +1,1 @@
+<?php $c=new mysqli("localhost","root","","beecycle_db"); if($c->connect_error){echo "CONNERR:".$c->connect_error; exit(1);} $r=$c->query("SELECT studentID, fullName, email FROM user ORDER BY studentID DESC LIMIT 10"); if(!$r){echo "QUERYERR:".$c->error; exit(1);} while($row=$r->fetch_assoc()){ echo $row["studentID"]." | ".$row["fullName"]." | ".$row["email"]."\n"; } ?>

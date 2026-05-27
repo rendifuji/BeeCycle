@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db_connection.php';
+include __DIR__.'/../db_connection.php';
 $errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -31,6 +31,9 @@ if (empty($_POST['studentID'])) {
     $errors[] = "studentID is required.";
 } else {
     $studentID = htmlspecialchars(trim($_POST['studentID']));
+    if (!preg_match('/^\d{10}$/', $studentID)) {
+        $errors[] = "Student ID must be a 10-digit number.";
+    }
 }
 
 // Validate campus
