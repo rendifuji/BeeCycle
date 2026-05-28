@@ -60,7 +60,7 @@ contact{
     display: flex;
     flex-direction: column;
     border-radius: 6px;
-    width:auto;
+    width:500px;
 
     .selldata{
         display: flex;

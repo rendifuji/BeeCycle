@@ -65,7 +65,6 @@ if (empty($_POST['password'])) {
 // -----------------
 if (empty($errors)) {
         $stmt = $conn->prepare("INSERT INTO user (fullName, email, studentID, campus, whatsapp, password) VALUES (?, ?, ?, ?, ?, ?)");
-        
         $stmt->bind_param(
             "ssssss",
             $fullName,
