@@ -1,5 +1,5 @@
 <?php
-include 'db_connection.php';
+include __DIR__.'/../db_connection.php';
 $result = $conn->query("SELECT * FROM user");
 ?>
 
@@ -68,9 +68,9 @@ $result = $conn->query("SELECT * FROM user");
                       <td><span class="pill"><?= htmlspecialchars($row['campus']); ?></span></td>
                       
                       <td class="action">
-                        <button class="delete-btn" onclick="confirmUserDelete('<?= $row['studentID']; ?>')">
+                        <a  style="text-decoration: none; color: red; display:flex; justify-content:center; " class="delete-btn" href="deleteManageUser.php?id=<?php echo $row['studentID']?>" onclick="return confirm('are you sure you want to do this')">
                           <img src="../assets/icons/trash.svg" alt="trash" />Delete
-                        </button>
+                        </a>
                       </td>
                     </tr>
                     <?php endwhile; ?>
@@ -83,15 +83,6 @@ $result = $conn->query("SELECT * FROM user");
         </section>
       </div>
     </main>
-
-   <div id="userDeleteModal" class="modal">
-    <div class="modal-content">
-        <p>Are you sure you want to delete this user?</p>
-        <a id="confirmDeleteBtn" class="btn-danger">Yes, Delete</a>
-        <button onclick="closeModal()" class="btn">Cancel</button>
-    </div>
-  </div>
-
     <footer>
       <div class="container">
         <p class="copyright">
@@ -101,15 +92,6 @@ $result = $conn->query("SELECT * FROM user");
       </div>
     </footer>
 
-    <script>
-    function confirmDelete(id){
-        document.getElementById('userDeleteModal').style.display = "flex";
-        document.getElementById('confirmDeleteBtn').href = "deleteManageUser.php" + id;
-    }
 
-    function closeModal(){
-        document.getElementById('userDeleteModal').style.display = 'none';
-    }
-    </script>
   </body>
 </html>

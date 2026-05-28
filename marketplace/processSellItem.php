@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db_connection.php';
+include __DIR__.'/../db_connection.php';
 $errors = [];
 
 if (!isset($_SESSION['studentID'])) {
@@ -53,14 +53,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($errors)) {
     //itemPhoto
     $itemPhotoBlob = null;
     if (isset($_FILES['itemPhoto']) && $_FILES['itemPhoto']['error'] == 0) {
-    $imageTmpName = $_FILES['itemPhoto']['tmp_name'];
-    $itemPhotoBlob = file_get_contents($imageTmpName); 
-    $errors[] = "A clear item photo upload is required."; 
-}
+        $imageTmpName = $_FILES['itemPhoto']['tmp_name'];
+        $itemPhotoBlob = file_get_contents($imageTmpName);
+    }
 
     if (empty($errors)) {
         $studentID = $_SESSION['studentID'];
-        $stmt = $conn->prepare("INSERT INTO item (studentID, itelTitle, category, itemCondition, price, description, COD, itemPhoto) VALUES (?,?,?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO item (studentID, itemTitle, category, itemCondition, price, description, COD, itemPhoto) VALUES (?,?,?, ?, ?, ?, ?, ?)");
         
         $stmt->bind_param(
             "issssssb",

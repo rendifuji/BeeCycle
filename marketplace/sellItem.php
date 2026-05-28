@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db_connection.php';
+include __DIR__.'/../db_connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $itemTitle = $_POST['itemTitle'];
@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <main class="ListingSection">
 
-        <form class="itemForm" action="sellItem.php" method="POST" enctype="multipart/form-data">
+        <form class="itemForm" action="processSellItem.php" method="POST" enctype="multipart/form-data">
 
             <div class="form-item">
                 <label>Item Title</label>

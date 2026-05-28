@@ -37,6 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Check 
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['email'] = $user['email'];
+            $_SESSION['studentID'] = $user['studentID'];
+            // we add the studentid because thats what is used in the other files to make sure its still the same session
 
         // Simpan cookie waktu login terakhir (1 minggu)
         $last_login_time = date("Y-m-d H:i:s");
@@ -46,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $conn->close();
             
 
-            header("Location: ../admin/dashboard.html");
+            header("Location: ../marketplace/sellitem.php");
             exit();
         } else {
             $errors[] = "Invalid email or password!";

@@ -1,17 +1,12 @@
 <?php
-include 'db_connection.php';
+include __DIR__.'/../db_connection.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
+
     $id = $_GET['id'];
+    mysqli_query($conn, "DELETE FROM item WHERE itemID = '$id'");
+    header("Location: manageListing.php");
 
-    $stmt = $conn->prepare("DELETE FROM item WHERE itemID=?");
-    $stmt->bind_param("s", $id);
-    $stmt->execute();
 
-    $stmt->close();
-    $conn->close();
-}
 
-header("Location: manageListing.php");
 exit();
 ?>

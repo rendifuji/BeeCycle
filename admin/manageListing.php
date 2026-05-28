@@ -1,10 +1,10 @@
 <?php
-include 'db_connection.php';
+include __DIR__.'/../db_connection.php';
 
 $query = "SELECT i.itemID, i.itemTitle, i.category, i.postedDate, u.fullName 
           FROM item i
           INNER JOIN user u ON i.studentID = u.studentID
-          ORDER BY item.PostedDate DESC";
+          ORDER BY i.postedDate DESC";
 
 $result = $conn->query($query);
 ?>
@@ -59,18 +59,18 @@ $result = $conn->query($query);
               </thead>
               <tbody>
                 <?php if ($result && $result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
+                    <?php while ($row = mysqli_fetch_array($result)): ?>
                     <tr>
                         <td><?= htmlspecialchars($row['itemTitle']); ?></td>
                         <td><?= htmlspecialchars($row['fullName']); ?></td>
-                        <td><?= htmlspecialchars($row['categeory']); ?></td>
+                        <td><?= htmlspecialchars($row['category']); ?></td>
                         <td><?= date('F d, Y', strtotime($row['postedDate'])); ?></td>
                         
-                        <td class="action">
-                            <button class="delete-btn" onclick="confirmListingDelete(<?= $row['itemID']; ?>)">
-                              Delete
-                            </button>
-                        </td>
+                      <td class="action">
+                        <a  style="text-decoration: none; color: red; display:flex; justify-content:center; " class="delete-btn" href="deleteManageListing.php?id=<?php echo $row['itemID']?>" onclick="return confirm('are you sure you want to do this')">
+                          <img src="../assets/icons/trash.svg" alt="trash" />Delete
+                        </a>
+                      </td>
                     </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
@@ -79,15 +79,6 @@ $result = $conn->query($query);
               </tbody>
             </table>
           </div>
-
-          <div id="listingDeleteModal" class="modal">
-            <div class="modal-content">
-                <p>Are you sure you want to delete this listing?</p>
-                <a id="confirmListingDeleteBtn" class="btn-danger">Yes, Delete</a>
-                <button onclick="closeModal()" class="btn">Cancel</button>
-            </div>
-          </div>
-
         </section>
       </div>
     </main>
@@ -101,15 +92,6 @@ $result = $conn->query($query);
       </div>
     </footer>
 
-    <script>
-    function confirmDelete(id){
-        document.getElementById('listingDeleteModal').style.display = "flex";
-        document.getElementById('confirmDeleteBtn').href = "deleteManageItem.php" + id;
-    }
-
-    function closeModal(){
-        document.getElementById('listingDeleteModal').style.display = 'none';
-    }
     </script>
   </body>
 </html>
