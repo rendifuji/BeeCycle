@@ -46,7 +46,6 @@ session_start();
           <label for="password">Password</label>
           <input type="password" id="password" name="password" required placeholder="*******" />
 
-          <p class="forgot-password">Forgot password?</p>
 
           <button type="submit">Log in</button>
         </form> 

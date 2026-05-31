@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $itemPhoto = $_POST['itemPhoto'];
 
     $stmt = $conn -> prepare("INSERT INTO item
-    (itemTitle, category, itemCondition, price, description, COD, itemPhoto)
+    (itemTitle, category, itemCondition, price, descrip tion, COD, itemPhoto)
     VALUES (?, ?, ?, ?, ?, ?, ?)");
 
 

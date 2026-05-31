@@ -1,3 +1,51 @@
+<?php
+  include __DIR__.("/../db_connection.php");
+  
+  $itemID= isset($_GET['id']) ? intval($_GET['id']): 0;
+  if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $itemphoto = $_POST['item-photo'];
+    $itemtitle = $_POST['item-title'];
+    $category = $_POST['category'];
+    $condition = $_POST ['condition'];
+    $price = $_POST ['price'];
+    $description = $_POST ['description'];
+    $campuslocation = $_POST ['campus-location'];
+    $meetingspot = $_POST ['meeting-spot'];
+
+
+    if($itemID ===0){
+      die("invalid ID");
+    }else{
+      $query = "UPDATE item SET 
+      itemTitle = '$itemtitle',
+      category = '$category',
+      itemCondition = '$condition',
+      price = '$price',
+      description = '$description',
+      COD = '$meetingspot',
+      itemPhoto = '$itemphoto'
+      WHERE id = '$itemID'
+      ";
+
+      $p = mysqli_query($conn, $query);
+      if($p){
+        header("Location: ../user/user-profile-dashboard.html ");
+      }
+    }
+
+
+
+
+
+  }
+
+
+
+
+
+?>
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -38,12 +86,14 @@
               <p>Update your item's details, price, or upload a new photo.</p>
             </div>
 
-            <form class="edit-listing-form" action="../user/user-profile-dashboard.html" novalidate>
+            <form class="edit-listing-form" action="" method="POST" novalidate>
               <div class="edit-listing-layout">
                 <aside class="listing-photo-panel">
                   <div class="listing-photo-preview">
                     <img src="../assets/Headphones.jpeg" alt="Listing item preview" />
                   </div>
+
+                  <input type="hidden" name="item-id" value="<?php echo($itemID)?>">
 
                   <div class="form-field form-field--file">
                     <label for="item-photo">Item Photo</label>
