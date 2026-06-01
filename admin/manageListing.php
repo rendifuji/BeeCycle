@@ -47,18 +47,17 @@ $result = $conn->query($query);
               </thead>
               <tbody>
                 <?php if ($result && $result->num_rows > 0): ?>
-                    <?php while ($row = mysqli_fetch_array($result)): ?>
+                    <?php while ($row = $result->fetch_assoc()): ?>
                     <tr>
                         <td><?= htmlspecialchars($row['itemTitle']); ?></td>
                         <td><?= htmlspecialchars($row['fullName']); ?></td>
                         <td><?= htmlspecialchars($row['category']); ?></td>
                         <td><?= date('F d, Y', strtotime($row['postedDate'])); ?></td>
-                        
-                      <td class="action">
-                        <a  style="text-decoration: none; color: red; display:flex; justify-content:center; " class="delete-btn" href="deleteManageItem.php?id=<?php echo $row['itemID']?>" onclick="return confirm('are you sure you want to do this')">
-                          <img src="../assets/icons/trash.svg" alt="trash" />Delete
-                        </a>
-                      </td>
+                        <td class="action">
+                          <button type="button" class="delete-btn" onclick="confirmListingDelete(<?= (int) $row['itemID']; ?>)">
+                            <img src="../assets/icons/trash.svg" alt="trash" />Delete
+                          </button>
+                        </td>
                     </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
@@ -71,6 +70,25 @@ $result = $conn->query($query);
       </div>
     </main>
 
+    <div id="listingDeleteModal" class="modal">
+      <div class="modal-content">
+        <p>Are you sure you want to delete this listing?</p>
+        <a id="confirmListingDeleteBtn" class="btn-danger">Yes, Delete</a>
+        <button type="button" onclick="closeListingModal()" class="btn">Cancel</button>
+      </div>
+    </div>
+
     <?php include '../includes/footer.php'; ?>
+
+    <script>
+      function confirmListingDelete(id) {
+        document.getElementById('listingDeleteModal').style.display = 'flex';
+        document.getElementById('confirmListingDeleteBtn').href = 'deleteManageItem.php?id=' + encodeURIComponent(id);
+      }
+
+      function closeListingModal() {
+        document.getElementById('listingDeleteModal').style.display = 'none';
+      }
+    </script>
   </body>
 </html>

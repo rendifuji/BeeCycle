@@ -37,18 +37,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Check 
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['email'] = $user['email'];
+
+            $last_login_time = date('Y-m-d H:i:s');
+            setcookie('last_login_time', $last_login_time, time() + (7 * 24 * 60 * 60), '/');
+
+            if ($user['email'] === 'admin@gmail.com') {
+                $_SESSION['isAdmin'] = true;
+                $stmt->close();
+                $conn->close();
+                header('Location: ../admin/dashboard.php');
+                exit();
+            }
+
             $_SESSION['studentID'] = $user['studentID'];
             $_SESSION['initials'] = strtoupper(substr($user['fullName'], 0, 2));
 
-        // Simpan cookie waktu login terakhir (1 minggu)
-        $last_login_time = date("Y-m-d H:i:s");
-        setcookie("last_login_time", $last_login_time, time() + (7 * 24 * 60 * 60), "/");
-            
             $stmt->close();
             $conn->close();
-            
 
-            header("Location: ../marketplace/homepage.php");
+            header('Location: ../marketplace/homepage.php');
             exit();
         } else {
             $errors[] = "Invalid email or password!";
