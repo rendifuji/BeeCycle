@@ -21,17 +21,17 @@ $result = $conn->query($query);
   <body>
     <header class="navbar">
       <div class="container">
-        <a href="index.php" class="logo"><span>Bee</span>Cycle</a>
+        <a href="../index.html" class="logo"><span>Bee</span>Cycle</a>
         <nav>
           <ul>
             <li><a href="dashboard.html">Dashboard</a></li>
-            <li><a href="manage-users.html">Manage Users</a></li>
-            <li><a href="manage-listings.php" class="active">Manage Listings</a></li>
+            <li><a href="manageUser.php">Manage Users</a></li>
+            <li><a href="manageListing.php" class="active">Manage Listings</a></li>
           </ul>
         </nav>
         <div class="buttons">
           <div class="avatar">NS</div>
-          <button class="btn">Exit Admin</button>
+          <button type="button" class="btn" onclick="window.location.href='../index.html'">Exit Admin</button>
         </div>
       </div>
     </header>
@@ -67,7 +67,7 @@ $result = $conn->query($query);
                         <td><?= date('F d, Y', strtotime($row['postedDate'])); ?></td>
                         
                       <td class="action">
-                        <a  style="text-decoration: none; color: red; display:flex; justify-content:center; " class="delete-btn" href="deleteManageListing.php?id=<?php echo $row['itemID']?>" onclick="return confirm('are you sure you want to do this')">
+                        <a  style="text-decoration: none; color: red; display:flex; justify-content:center; " class="delete-btn" href="deleteManageItem.php?id=<?php echo $row['itemID']?>" onclick="return confirm('are you sure you want to do this')">
                           <img src="../assets/icons/trash.svg" alt="trash" />Delete
                         </a>
                       </td>

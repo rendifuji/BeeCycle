@@ -1,40 +1,7 @@
 <?php
 session_start();
 include __DIR__.'/../db_connection.php';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $itemTitle = $_POST['itemTitle'];
-    $category = $_POST['category'];
-    $itemCondition = $_POST['itemCondition'];
-    $price = $_POST['price'];
-    $description = $_POST['description'];
-    $COD = $_POST['COD'];
-    $itemPhoto = $_POST['itemPhoto'];
-
-    $stmt = $conn -> prepare("INSERT INTO item
-    (itemTitle, category, itemCondition, price, descrip tion, COD, itemPhoto)
-    VALUES (?, ?, ?, ?, ?, ?, ?)");
-
-
-    $stmt->bind_param(
-        "issssssb",
-        $itemTitle,
-        $category,
-        $itemCondition,
-        $price,
-        $description,
-        $COD,
-        $itemPhoto
-    );
-    $stmt->execute();
-
-    $stmt->close();
-    $conn->close();
-
-    exit();
-}
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -51,14 +18,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="logo"><span>Bee</span>Cycle</div> 
         <nav>
           <div class="search">
-            <img src="BeeCycle-main/assets/icons/search.svg" />
+            <img src="../assets/icons/search.svg" alt="" />
             <input type="text" placeholder="Search for textbooks, electronics, etc..." />
           </div>
         </nav>
 
         <div class="right-section">
              <div class="buttons">
-             <a href="sell.item.html">+ Sell item</a>
+             <a href="homepage.php">+ Sell item</a>
              </div>
 
             <div class="pic">YS</div>

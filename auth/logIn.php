@@ -21,7 +21,7 @@ session_start();
   <body>
     <header class="navbar">
       <div class="container">
-        <a href="/" class="logo"><span>Bee</span>Cycle</a>
+        <a href="../index.html" class="logo"><span>Bee</span>Cycle</a>
       </div>
     </header>
     <main>

@@ -45,7 +45,7 @@
   <body>
     <header class="navbar">
       <div class="container">
-        <a href="../marketplace/home.html" class="logo"><span>Bee</span>Cycle</a>
+        <a href="homepage.php" class="logo"><span>Bee</span>Cycle</a>
         <nav>
           <div class="search">
             <img src="../assets/icons/search.svg" />
@@ -53,7 +53,7 @@
           </div>
         </nav>
         <div class="buttons">
-          <a href="auth/login.html">Log In</a>
+          <a href="../auth/logIn.php">Log In</a>
           <a class="btn btn-secondary" href="../auth/register.php">Sign Up</a>
         </div>
       </div>

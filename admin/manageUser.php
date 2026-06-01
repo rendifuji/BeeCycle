@@ -18,17 +18,17 @@ $result = $conn->query("SELECT * FROM user");
   <body>
     <header class="navbar">
       <div class="container">
-        <a href="index.php" class="logo"><span>Bee</span>Cycle</a>
+        <a href="../index.html" class="logo"><span>Bee</span>Cycle</a>
         <nav>
           <ul>
             <li><a href="dashboard.html">Dashboard</a></li>
             <li><a href="manageUser.php" class="active">Manage Users</a></li>
-            <li><a href="manage-listings.php">Manage Listings</a></li>
+            <li><a href="manageListing.php">Manage Listings</a></li>
           </ul>
         </nav>
         <div class="buttons">
           <div class="avatar">NS</div>
-          <button class="btn" onclick="window.location.href='index.php'">Exit Admin</button>
+          <button class="btn" onclick="window.location.href='../index.html'">Exit Admin</button>
         </div>
       </div>
     </header>

@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $conn->close();
             
 
-            header("Location: ../marketplace/sellitem.php");
+            header("Location: ../marketplace/homepage.php");
             exit();
         } else {
             $errors[] = "Invalid email or password!";

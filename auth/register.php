@@ -1,36 +1,6 @@
 <?php
 session_start();
 include  __DIR__.'/../db_connection.php';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $fullName = $_POST['fullName'];
-    $email = $_POST['email'];
-    $studentID = $_POST['studentID'];
-    $campus = $_POST['campus'];
-    $whatsapp = $_POST['whatsapp'];
-    $hashedPassword = $_POST['password'];
-
-    $stmt = $conn->prepare("INSERT INTO user
-    (fullName, email, studentID, campus, whatsapp, password)
-    VALUES (?, ?, ?, ?, ?, ?)");
-
-    $stmt->bind_param(
-        "ssssss",
-        $fullName,
-        $email,
-        $studentID,
-        $campus,
-        $whatsapp,
-        $hashedPassword
-    );
-
-    $stmt->execute();
-
-    $stmt->close();
-    $conn->close();
-
-    exit();
-}
 ?>
 
 <!doctype html>
@@ -54,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <header class="navbar">
 
       <div class="container">
-        <a href="/" class="logo"><span>Bee</span>Cycle</a>
+        <a href="../index.html" class="logo"><span>Bee</span>Cycle</a>
       </div>
 
     </header>

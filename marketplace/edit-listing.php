@@ -64,7 +64,7 @@
   <body>
     <header class="navbar">
       <div class="container">
-        <a href="../marketplace/home.html" class="logo"><span>Bee</span>Cycle</a>
+        <a href="homepage.php" class="logo"><span>Bee</span>Cycle</a>
         <nav>
           <div class="search">
             <img src="../assets/icons/search.svg" />
@@ -72,7 +72,7 @@
           </div>
         </nav>
         <div class="buttons">
-          <a class="btn btn-secondary" href="./sell-item.html"><img src="../assets/icons/plus.svg" alt="" />Sell Item</a>
+          <a class="btn btn-secondary" href="sellItem.php"><img src="../assets/icons/plus.svg" alt="" />Sell Item</a>
           <div class="avatar">YS</div>
         </div>
       </div>
