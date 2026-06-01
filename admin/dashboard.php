@@ -14,22 +14,7 @@
     <link rel="stylesheet" href="../admin.css" />
   </head>
   <body>
-    <header class="navbar">
-      <div class="container">
-        <a href="../index.html" class="logo"><span>Bee</span>Cycle</a>
-        <nav>
-          <ul>
-            <li><a href="dashboard.html" class="active">Dashboard</a></li>
-            <li><a href="manageUser.php">Manage Users</a></li>
-            <li><a href="manageListing.php">Manage Listings</a></li>
-          </ul>
-        </nav>
-        <div class="buttons">
-          <div class="avatar">NS</div>
-          <button type="button" class="btn" onclick="window.location.href='../index.html'">Exit Admin</button>
-        </div>
-      </div>
-    </header>
+    <?php include '../includes/navbar.php'; ?>
 
     <main>
       <div class="container">
@@ -75,13 +60,6 @@
       </div>
     </main>
 
-    <footer>
-      <div class="container">
-        <p class="copyright">
-          &copy; 2026 BeeCycle Marketplace. All rights reserved.
-        </p>
-        <p>Admin Panel v1.0</p>
-      </div>
-    </footer>
+    <?php include '../includes/footer.php'; ?>
   </body>
 </html>

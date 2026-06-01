@@ -1,5 +1,5 @@
 <?php
-include __DIR__.'/../db_connection.php';
+include '../db_connection.php';
 
 $query = "SELECT i.itemID, i.itemTitle, i.category, i.postedDate, u.fullName 
           FROM item i
@@ -15,26 +15,14 @@ $result = $conn->query($query);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Manage Listings</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../admin.css" />
   </head>
   <body>
-    <header class="navbar">
-      <div class="container">
-        <a href="../index.html" class="logo"><span>Bee</span>Cycle</a>
-        <nav>
-          <ul>
-            <li><a href="dashboard.html">Dashboard</a></li>
-            <li><a href="manageUser.php">Manage Users</a></li>
-            <li><a href="manageListing.php" class="active">Manage Listings</a></li>
-          </ul>
-        </nav>
-        <div class="buttons">
-          <div class="avatar">NS</div>
-          <button type="button" class="btn" onclick="window.location.href='../index.html'">Exit Admin</button>
-        </div>
-      </div>
-    </header>
+    <?php include '../includes/navbar.php'; ?>
 
     <main>
       <div class="container">
@@ -83,15 +71,6 @@ $result = $conn->query($query);
       </div>
     </main>
 
-     <footer>
-      <div class="container">
-        <p class="copyright">
-          &copy; 2026 BeeCycle Marketplace. All rights reserved.
-        </p>
-        <p>Admin Panel v1.0</p>
-      </div>
-    </footer>
-
-    </script>
+    <?php include '../includes/footer.php'; ?>
   </body>
 </html>

@@ -14,22 +14,7 @@
     <link rel="stylesheet" href="landing.css" />
   </head>
   <body>
-    <header class="navbar">
-      <div class="container">
-        <a href="#" class="logo"><span>Bee</span>Cycle</a>
-        <nav>
-          <ul>
-            <li><a href="#benefits">How it Works</a></li>
-            <li><a href="#categories">Categories</a></li>
-            <li><a href="#">About Us</a></li>
-          </ul>
-        </nav>
-        <div class="buttons">
-          <a href="auth/logIn.php">Log In</a>
-          <a class="btn btn-secondary" href="auth/register.php">Sign Up</a>
-        </div>
-      </div>
-    </header>
+    <?php include 'includes/navbar.php'; ?>
     <main>
       <section class="hero">
         <div class="container">
@@ -191,16 +176,6 @@
       </section>
     </main>
 
-    <footer>
-      <div class="container">
-        <div class="top">
-          <a href="#" class="logo"><span>Bee</span>Cycle</a>
-          <img class="sdg" src="./assets/SDG12.png" alt="SDG 12 badge" />
-        </div>
-        <p class="copyright">
-          &copy; 2026 BeeCycle Marketplace. All rights reserved.
-        </p>
-      </div>
-    </footer>
+    <?php include 'includes/footer.php'; ?>
   </body>
 </html>

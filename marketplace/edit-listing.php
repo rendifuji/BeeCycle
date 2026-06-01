@@ -1,5 +1,5 @@
 <?php
-  include __DIR__.("/../db_connection.php");
+  include '../db_connection.php';
   
   $itemID= isset($_GET['id']) ? intval($_GET['id']): 0;
   if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -29,7 +29,7 @@
 
       $p = mysqli_query($conn, $query);
       if($p){
-        header("Location: ../user/user-profile-dashboard.html ");
+        header("Location: ../user/user-profile-dashboard.php");
       }
     }
 
@@ -62,21 +62,7 @@
     <link rel="stylesheet" href="./edit-listing.css" />
   </head>
   <body>
-    <header class="navbar">
-      <div class="container">
-        <a href="homepage.php" class="logo"><span>Bee</span>Cycle</a>
-        <nav>
-          <div class="search">
-            <img src="../assets/icons/search.svg" />
-            <input type="text" placeholder="Search for textbooks, electronics, etc..." />
-          </div>
-        </nav>
-        <div class="buttons">
-          <a class="btn btn-secondary" href="sellItem.php"><img src="../assets/icons/plus.svg" alt="" />Sell Item</a>
-          <div class="avatar">YS</div>
-        </div>
-      </div>
-    </header>
+    <?php include '../includes/navbar.php'; ?>
     <main class="edit-listing-main">
       <section class="edit-listing-section">
         <div class="container">
@@ -189,7 +175,7 @@
                   </div>
 
                   <div class="edit-listing-actions">
-                    <a href="../user/user-profile-dashboard.html" class="btn-cancel">Cancel</a>
+                    <a href="../user/user-profile-dashboard.php" class="btn-cancel">Cancel</a>
                     <button type="submit" class="btn-save">Save Changes</button>
                   </div>
                 </div>
@@ -200,13 +186,7 @@
       </section>
     </main>
 
-    <footer>
-      <div class="container">
-        <p class="copyright">
-          &copy; 2026 BeeCycle Marketplace. All rights reserved.
-        </p>
-      </div>
-    </footer>
+    <?php include '../includes/footer.php'; ?>
     <script src="./edit-listing.js"></script>
   </body>
 </html>

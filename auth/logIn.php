@@ -1,7 +1,3 @@
-<?php
-session_start();
-?>
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -19,11 +15,7 @@ session_start();
     
   </head>
   <body>
-    <header class="navbar">
-      <div class="container">
-        <a href="../index.html" class="logo"><span>Bee</span>Cycle</a>
-      </div>
-    </header>
+    <?php include '../includes/navbar.php'; ?>
     <main>
       <section class="hero">
         <div class="hero-box">
@@ -56,13 +48,7 @@ session_start();
       Invalid email or password. Please try again.
     </div>
 
-    <footer>
-      <div class="container">
-        <p class="copyright">
-          &copy; 2026 BeeCycle Marketplace. All rights reserved.
-        </p>
-      </div>
-    </footer>
+    <?php include '../includes/footer.php'; ?>
 
     <!-- <script src="../auth.js" defer></script> -->
   </body>

@@ -14,21 +14,7 @@
     <link rel="stylesheet" href="./edit-profile.css" />
   </head>
   <body>
-    <header class="navbar">
-      <div class="container">
-        <a href="../marketplace/homepage.php" class="logo"><span>Bee</span>Cycle</a>
-        <nav>
-          <div class="search">
-            <img src="../assets/icons/search.svg" />
-            <input type="text" placeholder="Search for textbooks, electronics, etc..." />
-          </div>
-        </nav>
-        <div class="buttons">
-          <a class="btn btn-secondary" href="../marketplace/sellItem.php"><img src="../assets/icons/plus.svg" alt="" />Sell Item</a>
-          <div class="avatar">YS</div>
-        </div>
-      </div>
-    </header>
+    <?php include '../includes/navbar.php'; ?>
     <main class="edit-profile-main">
       <section class="edit-profile-section">
         <div class="container">
@@ -38,7 +24,7 @@
               <p>Update your contact details and campus location.</p>
             </div>
 
-            <form class="edit-profile-form" action="./user-profile-dashboard.html" novalidate>
+            <form class="edit-profile-form" action="./user-profile-dashboard.php" novalidate>
               <div class="edit-profile-grid">
                 <div class="form-field">
                   <label for="binus-email">Binus Email</label>
@@ -98,7 +84,7 @@
               </div>
 
               <div class="edit-profile-actions">
-                <a href="./user-profile-dashboard.html" class="btn-cancel">Cancel</a>
+                <a href="./user-profile-dashboard.php" class="btn-cancel">Cancel</a>
                 <button type="submit" class="btn-submit">Submit</button>
               </div>
             </form>
@@ -107,13 +93,7 @@
       </section>
     </main>
 
-    <footer>
-      <div class="container">
-        <p class="copyright">
-          &copy; 2026 BeeCycle Marketplace. All rights reserved.
-        </p>
-      </div>
-    </footer>
+    <?php include '../includes/footer.php'; ?>
     <script src="./edit-profile.js"></script>
   </body>
 </html>

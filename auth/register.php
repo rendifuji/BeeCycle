@@ -1,6 +1,5 @@
 <?php
-session_start();
-include  __DIR__.'/../db_connection.php';
+include '../db_connection.php';
 ?>
 
 <!doctype html>
@@ -20,14 +19,7 @@ include  __DIR__.'/../db_connection.php';
     <link rel="stylesheet" href="../auth.css">
   </head>
   <body>
-
-    <header class="navbar">
-
-      <div class="container">
-        <a href="../index.html" class="logo"><span>Bee</span>Cycle</a>
-      </div>
-
-    </header>
+    <?php include '../includes/navbar.php'; ?>
     <main>
 
       <section class="hero">
@@ -100,15 +92,7 @@ include  __DIR__.'/../db_connection.php';
       Please try again.
     </div>
 
-    <footer>
-
-      <div class="container">
-        <p class="copyright">
-          &copy; 2026 BeeCycle Marketplace. All rights reserved.
-        </p>
-      </div>
-
-    </footer>
+    <?php include '../includes/footer.php'; ?>
     <!-- <script src="../regist-auth.js" defer></script> -->
   </body>
 </html> 

@@ -1,36 +1,18 @@
-<?php
-session_start();
-include __DIR__.'/../db_connection.php';
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BeeCycle</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="Sellitem.css">
 </head>
 <body>
 
-    <header class="navbar">
-      <div class="container">
-        <div class="logo"><span>Bee</span>Cycle</div> 
-        <nav>
-          <div class="search">
-            <img src="../assets/icons/search.svg" alt="" />
-            <input type="text" placeholder="Search for textbooks, electronics, etc..." />
-          </div>
-        </nav>
-
-        <div class="right-section">
-             <div class="buttons">
-             <a href="homepage.php">+ Sell item</a>
-             </div>
-
-            <div class="pic">YS</div>
-        </div>
-    </header>
+    <?php include '../includes/navbar.php'; ?>
   
     <div class="judul">
         <h1>List an Item for Sell</h1>
@@ -105,10 +87,7 @@ include __DIR__.'/../db_connection.php';
         </form>
     </main>
 
-    <footer>
-          &copy; 2026 BeeCycle Marketplace. All rights reserved.
-      </div>
-    </footer>
+    <?php include '../includes/footer.php'; ?>
 
     <!-- <script src="Sellitem.js" defer></script> -->
     

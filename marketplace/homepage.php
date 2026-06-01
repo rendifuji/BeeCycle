@@ -1,5 +1,5 @@
 <?php
-  include __DIR__.("/../db_connection.php");
+  include '../db_connection.php';
 
   $query = "SELECT * from item";
   
@@ -34,21 +34,7 @@
     <script src="homepage.js" defer></script>
   </head>
   <body>
-    <header class="navbar">
-      <div class="container">
-        <a href="homepage.php" class="logo"><span>Bee</span>Cycle</a>
-        <nav>
-          <div class="search">
-            <img src="../assets/icons/search.svg" />
-            <input type="text" id="name-search" onchange="search()" placeholder="Search for textbooks, electronics, etc..." />
-          </div>
-        </nav>
-        <div class="buttons">
-          <a href="../auth/logIn.php">Log In</a>
-          <a class="btn btn-secondary" href="../auth/register.php">Sign Up</a>
-        </div>
-      </div>
-    </header>
+    <?php include '../includes/navbar.php'; ?>
 
     <main>
       <div class="list-container">
@@ -111,12 +97,6 @@
 
     </main>
 
-    <footer>
-      <div class="container">
-        <p class="copyright">
-          &copy; 2026 BeeCycle Marketplace. All rights reserved.
-        </p>
-      </div>
-    </footer>
+    <?php include '../includes/footer.php'; ?>
   </body>
 </html>

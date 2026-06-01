@@ -1,6 +1,6 @@
 <?php
 session_start();
-include  __DIR__.'/../db_connection.php';
+include '../db_connection.php';
 $errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['email'] = $user['email'];
             $_SESSION['studentID'] = $user['studentID'];
-            // we add the studentid because thats what is used in the other files to make sure its still the same session
+            $_SESSION['initials'] = strtoupper(substr($user['fullName'], 0, 2));
 
         // Simpan cookie waktu login terakhir (1 minggu)
         $last_login_time = date("Y-m-d H:i:s");
@@ -64,9 +64,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Form Submission</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Failed | BeeCycle</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../auth.css" />
 </head>
 <body>
 

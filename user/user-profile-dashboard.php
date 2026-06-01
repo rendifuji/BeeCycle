@@ -14,28 +14,14 @@
     <link rel="stylesheet" href="profile.css" />
   </head>
   <body>
-    <header class="navbar">
-      <div class="container">
-        <a href="../marketplace/homepage.php" class="logo"><span>Bee</span>Cycle</a>
-        <nav>
-          <div class="search">
-            <img src="../assets/icons/search.svg" />
-            <input type="text" placeholder="Search for textbooks, electronics, etc..." />
-          </div>
-        </nav>
-        <div class="buttons">
-          <a class="btn btn-secondary" href="../marketplace/sellItem.php"><img src="../assets/icons/plus.svg" alt="" />Sell Item</a>
-          <div class="avatar">YS</div>
-        </div>
-      </div>
-    </header>
+    <?php include '../includes/navbar.php'; ?>
     <main class="profile-dashboard-main">
       <section class="profile-dashboard">
         <div class="container profile-dashboard__layout">
           <article class="profile-card">
             <div class="profile-card__top">
               <div class="profile-card__avatar">YS</div>
-              <a href="../user/edit-profile.html" class="profile-card__edit">Edit Profile</a>
+              <a href="edit-profile.php" class="profile-card__edit">Edit Profile</a>
             </div>
 
             <div class="profile-card__identity">
@@ -191,13 +177,6 @@
       </section>
     </main>
 
-    <footer>
-      <div class="container">
-        <p class="copyright">
-          &copy; 2026 BeeCycle Marketplace. All rights reserved.
-        </p>
-      </div>
-    </footer>
-    <script src="./user-profile-dashboard.js"></script>
+    <?php include '../includes/footer.php'; ?>
   </body>
 </html>
