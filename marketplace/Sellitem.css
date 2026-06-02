@@ -160,13 +160,15 @@ input:focus, select:focus {
 }
 
 /* Layout Baris (Dua kolom) */
-.row1{
+.row1,
+.row2 {
     display: flex;
     gap: 20px;
 }
 
-.row1 .form-item{
-    flex: 1; 
+.row1 .form-item,
+.row2 .form-item {
+    flex: 1;
 }
 
 /* Tombol -------------------------------------------------*/

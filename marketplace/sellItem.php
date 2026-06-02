@@ -67,12 +67,28 @@
                 <small class="error" id="DescriptionError"></small>
             </div>
 
-            <div class="form-item">
-                <label>Preferred Meeting Spot(COD)</label>
-                <Input type="text" id="COD" name="COD" placeholder="e.g.,BeeHub" >
-                <small class="error" id="CODError"></small>   
+            <div class="row2">
+                <div class="form-item">
+                    <label>Campus Location</label>
+                    <select id="CampusLocation" name="CampusLocation">
+                        <option value="" disabled selected>Select your campus...</option>
+                        <option value="Binus@Kemanggisan">Binus@Kemanggisan</option>
+                        <option value="Binus@Alam Sutera">Binus@Alam Sutera</option>
+                        <option value="Binus@Bekasi">Binus@Bekasi</option>
+                        <option value="Binus@Malang">Binus@Malang</option>
+                        <option value="Binus@Semarang">Binus@Semarang</option>
+                        <option value="Binus@Bandung">Binus@Bandung</option>
+                    </select>
+                    <small class="error" id="LocationError"></small>
+                </div>
+
+                <div class="form-item">
+                    <label>Preferred Meeting Spot (COD)</label>
+                    <input type="text" id="COD" name="COD" placeholder="e.g., BeeHub" />
+                    <small class="error" id="CODError"></small>
+                </div>
             </div>
-            
+
             <div class="form-item">
                 <label>Item Photo</label>
                 <input type="file" id="itemPhoto" name="itemPhoto" accept="image/*">
@@ -89,7 +105,7 @@
 
     <?php include '../includes/footer.php'; ?>
 
-    <!-- <script src="Sellitem.js" defer></script> -->
+    <script src="Sellitem.js" defer></script>
     
 </body>
 </html>
