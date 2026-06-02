@@ -35,11 +35,11 @@
                     <label>Category</label>
                     <select id="category" name="category" placeholder="Select a category...">
                         <option value="" disabled selected>Select category...</option>
-                        <option value="Textbooks">Textbooks</option>
-                        <option value="Electronics">Electronics</option>
-                        <option value="DormEssentails">Dorm Essentails</option>
-                        <option value="Uniforms">Uniforms</option>
-                        <option value="ArtSupplies">Art Supplies</option>
+                        <option value="CA003">Textbooks</option>
+                        <option value="CA001">Electronics</option>
+                        <option value="CA004">Dorm Essentials</option>
+                        <option value="CA002">Uniforms</option>
+                        <option value="CA005">Art Supplies</option>
                     </select>
                     <small class="error" id="CategoryError"></small>
                 </div>
@@ -47,9 +47,9 @@
                     <label>Condition</label>
                     <select id="itemCondition" name="itemCondition" placeholder="Select condition...">
                         <option value="" disabled selected>Select condition...</option>
-                        <option value="New">New</option>
-                        <option value="LikeNew">Like New</option>
-                        <option value="Used">Used</option>
+                        <option value="CO001">New</option>
+                        <option value="CO002">Like New</option>
+                        <option value="CO003">Used</option>
                     </select>
                     <small class="error" id="ConditionError"></small>
                 </div>

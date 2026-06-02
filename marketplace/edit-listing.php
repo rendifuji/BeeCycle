@@ -18,13 +18,13 @@
     }else{
       $query = "UPDATE item SET 
       itemTitle = '$itemtitle',
-      category = '$category',
-      itemCondition = '$condition',
+      categoryID = '$category',
+      conditionID = '$condition',
       price = '$price',
       description = '$description',
       COD = '$meetingspot',
       itemPhoto = '$itemphoto'
-      WHERE id = '$itemID'
+      WHERE itemID = '$itemID'
       ";
 
       $p = mysqli_query($conn, $query);
@@ -105,11 +105,11 @@
                       <div class="select-wrap">
                         <select id="category" name="category">
                           <option value="" selected disabled>Select a category</option>
-                          <option>Textbooks</option>
-                          <option>Electronics</option>                         
-                          <option>Dorm Essentials</option>
-                          <option>Uniforms</option>
-                          <option>Art Supplies</option>
+                          <option value="CA003">Textbooks</option>
+                          <option value="CA001">Electronics</option>
+                          <option value="CA004">Dorm Essentials</option>
+                          <option value="CA002">Uniforms</option>
+                          <option value="CA005">Art Supplies</option>
                         </select>
                       </div>
                     </div>
@@ -119,10 +119,9 @@
                       <div class="select-wrap">
                         <select id="condition" name="condition">
                           <option value="" selected disabled>Select condition</option>
-                          <option>Like New</option>
-                          <option>Good</option>
-                          <option>Fair</option>
-                          <option>Used</option>
+                          <option value="CO001">New</option>
+                          <option value="CO002">Like New</option>
+                          <option value="CO003">Used</option>
                         </select>
                       </div>
                     </div>

@@ -9,8 +9,8 @@
     die("invalid ID");
   }
   else{
-    $query = "SELECT i.itemID, i.itemTitle, i.category, i.price, i.description, i.COD, u.fullName, u.campus, u.whatsapp, i.postedDate
-    FROM item i JOIN user u ON i.studentID = u.studentID WHERE i.itemid = $itemID";
+    $query = "SELECT i.itemID, i.itemTitle, i.price, i.description, i.COD, u.fullName, u.campus, u.whatsapp, i.postedDate, c.categoryName
+    FROM item i JOIN user u ON i.studentID = u.studentID JOIN categories c ON i.categoryID = c.categoryID WHERE i.itemID = $itemID";
   
     $result = mysqli_query($conn, $query);
     $item = mysqli_fetch_assoc($result);
@@ -47,7 +47,7 @@
     <main>
       <div class="det-container">
         <nav>
-          Home /<?php echo($item['category']); echo("/"); echo($item['itemTitle'])?>
+          Home /<?php echo($item['categoryName']); echo("/"); echo($item['itemTitle'])?>
         </nav>
 
         <section class="prodetail-container">
@@ -57,7 +57,7 @@
             <h1><?php echo($item['itemTitle'])?></h1>
             <span class="price"> <h1><?php echo($item['price'])?></h1></span>
             <div class="tags">
-              <?php echo($item['category'])?>
+              <?php echo($item['categoryName'])?>
               <span class="gray"><?php echo $created?></span>
             </div>
 
@@ -100,7 +100,7 @@
 
         <section class="more">
           <?php
-            $query =  "SELECT i.itemID, i.itemTitle, i.category, i.price, i.description, i.COD, u.fullName, u.campus, u.whatsapp, i.postedDate FROM item i JOIN user u ON i.studentID = u.studentID";
+            $query =  "SELECT i.itemID, i.itemTitle, i.price, i.description, i.COD, u.fullName, u.campus, u.whatsapp, i.postedDate FROM item i JOIN user u ON i.studentID = u.studentID";
             $result =mysqli_query($conn,$query);
             $items = [];
             while ($row = mysqli_fetch_assoc($result)){

@@ -1,9 +1,10 @@
 <?php
 include '../db_connection.php';
 
-$query = "SELECT i.itemID, i.itemTitle, i.category, i.postedDate, u.fullName 
+$query = "SELECT i.itemID, i.itemTitle, c.categoryName, i.postedDate, u.fullName
           FROM item i
           INNER JOIN user u ON i.studentID = u.studentID
+          INNER JOIN categories c ON i.categoryID = c.categoryID
           ORDER BY i.postedDate DESC";
 
 $result = $conn->query($query);
@@ -51,7 +52,7 @@ $result = $conn->query($query);
                     <tr>
                         <td><?= htmlspecialchars($row['itemTitle']); ?></td>
                         <td><?= htmlspecialchars($row['fullName']); ?></td>
-                        <td><?= htmlspecialchars($row['category']); ?></td>
+                        <td><?= htmlspecialchars($row['categoryName']); ?></td>
                         <td><?= date('F d, Y', strtotime($row['postedDate'])); ?></td>
                         <td class="action">
                           <button type="button" class="delete-btn" onclick="confirmListingDelete(<?= (int) $row['itemID']; ?>)">

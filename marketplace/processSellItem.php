@@ -59,10 +59,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($errors)) {
 
     if (empty($errors)) {
         $studentID = $_SESSION['studentID'];
-        $stmt = $conn->prepare("INSERT INTO item (studentID, itemTitle, category, itemCondition, price, description, COD, itemPhoto) VALUES (?,?,?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO item (studentID, itemTitle, categoryID, conditionID, price, description, COD, itemPhoto) VALUES (?,?,?, ?, ?, ?, ?, ?)");
         
         $stmt->bind_param(
-            "issssssb",
+            "sssssssb",
             $studentID,
             $itemTitle,
             $category,
