@@ -51,12 +51,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($errors)) {
     if (isset($_FILES['itemPhoto']) && $_FILES['itemPhoto']['error'] == 0) {
         $imageTmpName = $_FILES['itemPhoto']['tmp_name'];
         $itemPhotoBlob = file_get_contents($imageTmpName);
+    } else {
+        $errors[] = "item photo is required.";
     }
 
     if (empty($errors)) {
         $studentID = $_SESSION['studentID'];
         $stmt = $conn->prepare("INSERT INTO item (studentID, itemTitle, categoryID, conditionID, price, description, COD, itemPhoto) VALUES (?,?,?, ?, ?, ?, ?, ?)");
-        
+
+        $blobParam = null;
         $stmt->bind_param(
             "sssssssb",
             $studentID,
@@ -66,12 +69,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($errors)) {
             $price,
             $description,
             $COD,
-            $itemPhotoBlob
+            $blobParam
         );
 
-        if ($itemPhotoBlob !== null) {
-            $stmt->send_long_data(7, $itemPhotoBlob);
-        }
+        $stmt->send_long_data(7, $itemPhotoBlob);
 
         if ($stmt->execute()) {
             $stmt->close();

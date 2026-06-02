@@ -1,4 +1,26 @@
-<?php include '../includes/student-check.php'; ?>
+<?php
+  include '../includes/student-check.php';
+  include '../db_connection.php';
+
+  $studentID = $_SESSION['studentID'];
+
+  $query = "SELECT * FROM user WHERE studentID = '$studentID'";
+  $result = mysqli_query($conn, $query);
+  $user = mysqli_fetch_assoc($result);
+
+  $listQuery = "SELECT i.itemID, i.itemTitle, i.price, i.description, i.COD, i.postedDate, co.conditionName
+                FROM item i
+                JOIN `condition` co ON i.conditionID = co.conditionID
+                WHERE i.studentID = '$studentID'
+                ORDER BY i.postedDate DESC";
+  $listResult = mysqli_query($conn, $listQuery);
+  $listings = [];
+  while ($row = mysqli_fetch_assoc($listResult)) {
+    $listings[] = $row;
+  }
+
+  $initials = $_SESSION['initials'];
+?>
 
 <!doctype html>
 <html lang="en">
@@ -22,27 +44,27 @@
         <div class="container profile-dashboard__layout">
           <article class="profile-card">
             <div class="profile-card__top">
-              <div class="profile-card__avatar">YS</div>
+              <div class="profile-card__avatar"><?php echo($initials); ?></div>
               <a href="edit-profile.php" class="profile-card__edit">Edit Profile</a>
             </div>
 
             <div class="profile-card__identity">
-              <h1>Yohannes Elia Suryawan</h1>
-              <p>2802472493</p>
+              <h1><?php echo($user['fullName']); ?></h1>
+              <p><?php echo($user['studentID']); ?></p>
             </div>
 
             <dl class="profile-card__details">
               <div class="profile-card__row">
                 <dt>Campus</dt>
-                <dd>BINUS @ Alam Sutera</dd>
+                <dd><?php echo($user['campus']); ?></dd>
               </div>
               <div class="profile-card__row">
                 <dt>Phone</dt>
-                <dd>081234567890</dd>
+                <dd><?php echo($user['whatsapp']); ?></dd>
               </div>
               <div class="profile-card__row">
                 <dt>Email</dt>
-                <dd>yohannes.suryawan@binus.ac.id</dd>
+                <dd><?php echo($user['email']); ?></dd>
               </div>
             </dl>
           </article>
@@ -54,125 +76,35 @@
             </div>
 
             <div class="listing-grid">
+              <?php foreach ($listings as $listing): ?>
+              <?php
+                $badge = $listing['conditionName'] === 'LikeNew' ? 'Like New' : $listing['conditionName'];
+                $editUrl = '../marketplace/edit-listing.php?id=' . $listing['itemID'];
+              ?>
               <article
                 class="listing-card"
-                onclick="window.location.href='../marketplace/edit-listing.php'"
-                onkeydown="if(event.key==='Enter' || event.key===' '){ event.preventDefault(); window.location.href='../marketplace/edit-listing.php'; }"
+                onclick="window.location.href='<?php echo($editUrl); ?>'"
+                onkeydown="if(event.key==='Enter' || event.key===' '){ event.preventDefault(); window.location.href='<?php echo($editUrl); ?>'; }"
                 tabindex="0"
                 role="link"
-                aria-label="Open edit listing page for Sony WH-1000XM4"
+                aria-label="Open edit listing page for <?php echo($listing['itemTitle']); ?>"
               >
-                <div class="listing-card__badge">Like New</div>
-                <img src="../assets/Headphones.jpeg" alt="Sony WH-1000XM4 Wireless Headphones" class="listing-card__image" />
+                <div class="listing-card__badge"><?php echo($badge); ?></div>
+                <img src="../marketplace/item-image.php?id=<?php echo($listing['itemID']); ?>" alt="<?php echo($listing['itemTitle']); ?>" class="listing-card__image" />
                 <div class="listing-card__content">
-                  <p class="listing-card__price">Rp 1.850.000</p>
-                  <h3>Sony WH-1000XM4</h3>
-                  <p class="listing-card__subtitle">Wireless Headphones</p>
+                  <p class="listing-card__price"><?php echo($listing['price']); ?></p>
+                  <h3><?php echo($listing['itemTitle']); ?></h3>
+                  <p class="listing-card__subtitle"><?php echo($listing['description']); ?></p>
                   <div class="listing-card__meta">
                     <span class="listing-card__location">
                       <img src="../assets/icons/pin.svg" alt="" />
-                      Kampus Anggrek
+                      <?php echo($listing['COD']); ?>
                     </span>
-                    <span>2 hrs ago</span>
+                    <span><?php echo($listing['postedDate']); ?></span>
                   </div>
                 </div>
               </article>
-
-              <article
-                class="listing-card"
-                onclick="window.location.href='../marketplace/edit-listing.php'"
-                onkeydown="if(event.key==='Enter' || event.key===' '){ event.preventDefault(); window.location.href='../marketplace/edit-listing.php'; }"
-                tabindex="0"
-                role="link"
-                aria-label="Open edit listing page for Sony WH-1000XM4"
-              >
-                <div class="listing-card__badge">Like New</div>
-                <img src="../assets/Headphones.jpeg" alt="Sony WH-1000XM4 Wireless Headphones" class="listing-card__image" />
-                <div class="listing-card__content">
-                  <p class="listing-card__price">Rp 1.850.000</p>
-                  <h3>Sony WH-1000XM4</h3>
-                  <p class="listing-card__subtitle">Wireless Headphones</p>
-                  <div class="listing-card__meta">
-                    <span class="listing-card__location">
-                      <img src="../assets/icons/pin.svg" alt="" />
-                      Kampus Anggrek
-                    </span>
-                    <span>2 hrs ago</span>
-                  </div>
-                </div>
-              </article>
-
-              <article
-                class="listing-card"
-                onclick="window.location.href='../marketplace/edit-listing.php'"
-                onkeydown="if(event.key==='Enter' || event.key===' '){ event.preventDefault(); window.location.href='../marketplace/edit-listing.php'; }"
-                tabindex="0"
-                role="link"
-                aria-label="Open edit listing page for Sony WH-1000XM4"
-              >
-                <div class="listing-card__badge">Like New</div>
-                <img src="../assets/Headphones.jpeg" alt="Sony WH-1000XM4 Wireless Headphones" class="listing-card__image" />
-                <div class="listing-card__content">
-                  <p class="listing-card__price">Rp 1.850.000</p>
-                  <h3>Sony WH-1000XM4</h3>
-                  <p class="listing-card__subtitle">Wireless Headphones</p>
-                  <div class="listing-card__meta">
-                    <span class="listing-card__location">
-                      <img src="../assets/icons/pin.svg" alt="" />
-                      Kampus Anggrek
-                    </span>
-                    <span>2 hrs ago</span>
-                  </div>
-                </div>
-              </article>
-
-              <article
-                class="listing-card"
-                onclick="window.location.href='../marketplace/edit-listing.php'"
-                onkeydown="if(event.key==='Enter' || event.key===' '){ event.preventDefault(); window.location.href='../marketplace/edit-listing.php'; }"
-                tabindex="0"
-                role="link"
-                aria-label="Open edit listing page for Sony WH-1000XM4"
-              >
-                <div class="listing-card__badge">Like New</div>
-                <img src="../assets/Headphones.jpeg" alt="Sony WH-1000XM4 Wireless Headphones" class="listing-card__image" />
-                <div class="listing-card__content">
-                  <p class="listing-card__price">Rp 1.850.000</p>
-                  <h3>Sony WH-1000XM4</h3>
-                  <p class="listing-card__subtitle">Wireless Headphones</p>
-                  <div class="listing-card__meta">
-                    <span class="listing-card__location">
-                      <img src="../assets/icons/pin.svg" alt="" />
-                      Kampus Anggrek
-                    </span>
-                    <span>2 hrs ago</span>
-                  </div>
-                </div>
-              </article>
-
-              <article
-                class="listing-card"
-                onclick="window.location.href='../marketplace/edit-listing.php'"
-                onkeydown="if(event.key==='Enter' || event.key===' '){ event.preventDefault(); window.location.href='../marketplace/edit-listing.php'; }"
-                tabindex="0"
-                role="link"
-                aria-label="Open edit listing page for Sony WH-1000XM4"
-              >
-                <div class="listing-card__badge">Like New</div>
-                <img src="../assets/Headphones.jpeg" alt="Sony WH-1000XM4 Wireless Headphones" class="listing-card__image" />
-                <div class="listing-card__content">
-                  <p class="listing-card__price">Rp 1.850.000</p>
-                  <h3>Sony WH-1000XM4</h3>
-                  <p class="listing-card__subtitle">Wireless Headphones</p>
-                  <div class="listing-card__meta">
-                    <span class="listing-card__location">
-                      <img src="../assets/icons/pin.svg" alt="" />
-                      Kampus Anggrek
-                    </span>
-                    <span>2 hrs ago</span>
-                  </div>
-                </div>
-              </article>
+              <?php endforeach; ?>
             </div>
           </section>
         </div>

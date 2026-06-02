@@ -1,4 +1,31 @@
-<?php include '../includes/student-check.php'; ?>
+<?php
+  include '../includes/student-check.php';
+  include '../db_connection.php';
+
+  $studentID = $_SESSION['studentID'];
+
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $fullName = $_POST['full-name'];
+    $campus = $_POST['campus-location'];
+    $whatsapp = $_POST['whatsapp-number'];
+
+    $query = "UPDATE user SET
+      fullName = '$fullName',
+      campus = '$campus',
+      whatsapp = '$whatsapp'
+      WHERE studentID = '$studentID'";
+
+    mysqli_query($conn, $query);
+    $_SESSION['initials'] = strtoupper(substr($fullName, 0, 2));
+
+    header('Location: user-profile-dashboard.php');
+    exit();
+  }
+
+  $query = "SELECT * FROM user WHERE studentID = '$studentID'";
+  $result = mysqli_query($conn, $query);
+  $user = mysqli_fetch_assoc($result);
+?>
 
 <!doctype html>
 <html lang="en">
@@ -26,7 +53,7 @@
               <p>Update your contact details and campus location.</p>
             </div>
 
-            <form class="edit-profile-form" action="./user-profile-dashboard.php" novalidate>
+            <form class="edit-profile-form" action="" method="POST" novalidate>
               <div class="edit-profile-grid">
                 <div class="form-field">
                   <label for="binus-email">Binus Email</label>
@@ -35,6 +62,8 @@
                     name="binus-email"
                     type="email"
                     placeholder="Enter your Binus email"
+                    value="<?php echo($user['email']); ?>"
+                    readonly
                   />
                 </div>
 
@@ -45,6 +74,8 @@
                     name="student-id"
                     type="text"
                     placeholder="Enter your student ID"
+                    value="<?php echo($user['studentID']); ?>"
+                    readonly
                   />
                 </div>
               </div>
@@ -56,6 +87,7 @@
                   name="full-name"
                   type="text"
                   placeholder="Enter your full name"
+                  value="<?php echo($user['fullName']); ?>"
                 />
               </div>
 
@@ -63,14 +95,13 @@
                 <label for="campus-location">Campus Location</label>
                 <div class="select-wrap">
                   <select id="campus-location" name="campus-location">
-                    <option value="" selected disabled>Select your campus location</option>
-                    <option>BINUS @ Kemanggisan</option>
-                    <option>BINUS @ Alam Sutera</option>
-                    <option>BINUS @ Anggrek</option>
-                    <option>BINUS @ Bekasi</option>
-                    <option>BINUS @ Malang</option>
-                    <option>BINUS @ Semarang</option>
-                    <option>BINUS @ Bandung</option>
+                    <option value="" disabled>Select your campus location</option>
+                    <option value="Binus@Kemanggisan" <?php if ($user['campus'] === 'Binus@Kemanggisan') echo 'selected'; ?>>Binus@Kemanggisan</option>
+                    <option value="Binus@Alam Sutera" <?php if ($user['campus'] === 'Binus@Alam Sutera') echo 'selected'; ?>>Binus@Alam Sutera</option>
+                    <option value="Binus@Bekasi" <?php if ($user['campus'] === 'Binus@Bekasi') echo 'selected'; ?>>Binus@Bekasi</option>
+                    <option value="Binus@Malang" <?php if ($user['campus'] === 'Binus@Malang') echo 'selected'; ?>>Binus@Malang</option>
+                    <option value="Binus@Semarang" <?php if ($user['campus'] === 'Binus@Semarang') echo 'selected'; ?>>Binus@Semarang</option>
+                    <option value="Binus@Bandung" <?php if ($user['campus'] === 'Binus@Bandung') echo 'selected'; ?>>Binus@Bandung</option>
                   </select>
                 </div>
               </div>
@@ -82,6 +113,7 @@
                   name="whatsapp-number"
                   type="tel"
                   placeholder="Enter your WhatsApp number"
+                  value="<?php echo($user['whatsapp']); ?>"
                 />
               </div>
 

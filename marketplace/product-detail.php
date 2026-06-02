@@ -51,7 +51,7 @@
         </nav>
 
         <section class="prodetail-container">
-          <img src="../assets/headphones.jpeg" alt="headphones">
+          <img src="item-image.php?id=<?php echo($item['itemID']); ?>" alt="headphones">
           <div class="prodetail">
             <span class="like">Like New</span>
             <h1><?php echo($item['itemTitle'])?></h1>
@@ -113,7 +113,7 @@
             <?php foreach($items as $similiaritem):?>
               <div class="card" onclick="window.location.href = 'product-detail.php?id=<?php echo htmlspecialchars($similiaritem['itemID'] ?? '');?>'">
                 <span class="like">Like New</span>
-                <img src="../assets/headphones.jpeg" alt="">
+                <img src="item-image.php?id=<?php echo($similiaritem['itemID']); ?>" alt="">
                 <span class="price"><?php echo($similiaritem['price'])?></span>
                 <h3><?php echo ($similiaritem['itemTitle'])?> </h3>
                 <div class="cardbot"> 

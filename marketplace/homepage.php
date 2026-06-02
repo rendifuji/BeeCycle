@@ -80,7 +80,7 @@
             <?php foreach($items as $item):?>
             <div class="card" onclick="window.location.href = 'product-detail.php?id=<?php echo htmlspecialchars($item['itemID'] ?? '');?>'">
               <span class="like">Like New</span>
-              <img src="../assets/headphones.jpeg" alt="">
+              <img src="item-image.php?id=<?php echo($item['itemID']); ?>" alt="">
               <span class="price"><?php echo($item['price'])?></span>
               <span class="name"><h3><?php echo ($item['itemTitle'])?></h3></span>
               <div class="cardbot"> 

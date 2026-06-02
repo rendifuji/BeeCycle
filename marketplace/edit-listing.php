@@ -77,7 +77,7 @@
               <div class="edit-listing-layout">
                 <aside class="listing-photo-panel">
                   <div class="listing-photo-preview">
-                    <img src="../assets/Headphones.jpeg" alt="Listing item preview" />
+                    <img src="item-image.php?id=<?php echo($itemID); ?>" alt="Listing item preview" />
                   </div>
 
                   <input type="hidden" name="item-id" value="<?php echo($itemID)?>">
