@@ -1,4 +1,5 @@
 <?php
+  include '../includes/student-check.php';
   include '../db_connection.php';
   
   $itemID= isset($_GET['id']) ? intval($_GET['id']): 0;

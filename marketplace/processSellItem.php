@@ -1,11 +1,7 @@
 <?php
-session_start();
+include '../includes/student-check.php';
 include '../db_connection.php';
 $errors = [];
-
-if (!isset($_SESSION['studentID'])) {
-    $errors[] = "You must be logged in as a student to sell items.";
-}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($errors)) {
     //validate item title

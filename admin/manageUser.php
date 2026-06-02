@@ -1,4 +1,5 @@
 <?php
+include '../includes/admin-check.php';
 include '../db_connection.php';
 $result = $conn->query("SELECT * FROM user");
 ?>

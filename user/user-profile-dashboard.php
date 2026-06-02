@@ -1,3 +1,5 @@
+<?php include '../includes/student-check.php'; ?>
+
 <!doctype html>
 <html lang="en">
   <head>

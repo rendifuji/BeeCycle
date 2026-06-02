@@ -1,4 +1,5 @@
 <?php
+include '../includes/admin-check.php';
 include '../db_connection.php';
 
 $query = "SELECT i.itemID, i.itemTitle, c.categoryName, i.postedDate, u.fullName
