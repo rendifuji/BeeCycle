@@ -18,11 +18,9 @@ if ($itemID === 0) {
     exit();
 }
 
-$stmt = $conn->prepare('DELETE FROM item WHERE itemID = ? AND studentID = ?');
-$stmt->bind_param('is', $itemID, $studentID);
-$stmt->execute();
-$deleted = $stmt->affected_rows > 0;
-$stmt->close();
+$escapedStudentID = mysqli_real_escape_string($conn, $studentID);
+$query = "DELETE FROM item WHERE itemID = $itemID AND studentID = '$escapedStudentID'";
+$deleted = mysqli_query($conn, $query) && mysqli_affected_rows($conn) > 0;
 $conn->close();
 
 if ($deleted) {
