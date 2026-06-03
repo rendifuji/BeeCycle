@@ -141,6 +141,25 @@ main.profile-dashboard-main {
   word-break: break-word;
 }
 
+.listing-flash {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 0.94rem;
+}
+
+.listing-flash--success {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+}
+
+.listing-flash--error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
 .listing-panel__header {
   display: flex;
   justify-content: space-between;
