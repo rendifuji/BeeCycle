@@ -165,32 +165,6 @@ main.edit-listing-main {
   color: #94a3b8;
 }
 
-.form-field.has-error input,
-.form-field.has-error select,
-.form-field.has-error textarea {
-  border-color: #ef4444;
-  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
-}
-
-.field-error {
-  min-height: 18px;
-  margin-top: 6px;
-  font-size: 0.8rem;
-  color: #dc2626;
-}
-
-.form-status {
-  min-height: 20px;
-  margin-bottom: 14px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #dc2626;
-}
-
-.form-status.is-success {
-  color: #15803d;
-}
-
 .form-field input:focus,
 .form-field select:focus,
 .form-field textarea:focus {

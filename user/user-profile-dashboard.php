@@ -1,12 +1,18 @@
 <?php
   include '../includes/student-check.php';
   include '../db_connection.php';
+  include '../includes/price-format.php';
 
-  $studentID = $_SESSION['studentID'];
+  $studentID = trim($_SESSION['studentID']);
 
-  $query = "SELECT * FROM user WHERE studentID = '$studentID'";
+  $query = "SELECT * FROM user WHERE studentID = '" . mysqli_real_escape_string($conn, $studentID) . "'";
   $result = mysqli_query($conn, $query);
   $user = mysqli_fetch_assoc($result);
+
+  $campus = $user['campus'] ?? $user['Campus'] ?? '';
+  $whatsapp = $user['whatsapp'] ?? $user['Whatsapp'] ?? $user['phone'] ?? '';
+  $email = $user['email'] ?? $user['Email'] ?? ($_SESSION['email'] ?? '');
+  $fullName = $user['fullName'] ?? $user['full_name'] ?? '';
 
   $listQuery = "SELECT i.itemID, i.itemTitle, i.price, i.description, i.COD, i.postedDate, co.conditionName
                 FROM item i
@@ -20,6 +26,30 @@
   }
 
   $initials = $_SESSION['initials'];
+
+  function timeAgo($datetime) {
+    $ts = strtotime($datetime);
+    if ($ts === false) {
+      return 'Recently';
+    }
+    $diff = time() - $ts;
+    if ($diff < 60) {
+      return 'Just now';
+    }
+    if ($diff < 3600) {
+      $mins = (int) floor($diff / 60);
+      return $mins . ($mins === 1 ? ' min ago' : ' mins ago');
+    }
+    if ($diff < 86400) {
+      $hrs = (int) floor($diff / 3600);
+      return $hrs . ($hrs === 1 ? ' hr ago' : ' hrs ago');
+    }
+    if ($diff < 604800) {
+      $days = (int) floor($diff / 86400);
+      return $days . ($days === 1 ? ' day ago' : ' days ago');
+    }
+    return date('M j, Y', $ts);
+  }
 ?>
 
 <!doctype html>
@@ -49,22 +79,22 @@
             </div>
 
             <div class="profile-card__identity">
-              <h1><?php echo($user['fullName']); ?></h1>
-              <p><?php echo($user['studentID']); ?></p>
+              <h1><?php echo htmlspecialchars($fullName); ?></h1>
+              <p><?php echo htmlspecialchars($studentID); ?></p>
             </div>
 
             <dl class="profile-card__details">
               <div class="profile-card__row">
                 <dt>Campus</dt>
-                <dd><?php echo($user['campus']); ?></dd>
+                <dd><?php echo htmlspecialchars($campus !== '' ? $campus : '—'); ?></dd>
               </div>
               <div class="profile-card__row">
                 <dt>Phone</dt>
-                <dd><?php echo($user['whatsapp']); ?></dd>
+                <dd><?php echo htmlspecialchars($whatsapp !== '' ? $whatsapp : '—'); ?></dd>
               </div>
               <div class="profile-card__row">
                 <dt>Email</dt>
-                <dd><?php echo($user['email']); ?></dd>
+                <dd><?php echo htmlspecialchars($email !== '' ? $email : '—'); ?></dd>
               </div>
             </dl>
           </article>
@@ -92,7 +122,7 @@
                 <div class="listing-card__badge"><?php echo($badge); ?></div>
                 <img src="../marketplace/item-image.php?id=<?php echo($listing['itemID']); ?>" alt="<?php echo($listing['itemTitle']); ?>" class="listing-card__image" />
                 <div class="listing-card__content">
-                  <p class="listing-card__price"><?php echo($listing['price']); ?></p>
+                  <p class="listing-card__price"><?php echo htmlspecialchars(formatPriceDisplay($listing['price'])); ?></p>
                   <h3><?php echo($listing['itemTitle']); ?></h3>
                   <p class="listing-card__subtitle"><?php echo($listing['description']); ?></p>
                   <div class="listing-card__meta">
@@ -100,7 +130,7 @@
                       <img src="../assets/icons/pin.svg" alt="" />
                       <?php echo($listing['COD']); ?>
                     </span>
-                    <span><?php echo($listing['postedDate']); ?></span>
+                    <span><?php echo timeAgo($listing['postedDate']); ?></span>
                   </div>
                 </div>
               </article>

@@ -136,29 +136,18 @@ main.edit-profile-main {
   color: #94a3b8;
 }
 
-.form-field.has-error input,
-.form-field.has-error select {
-  border-color: #ef4444;
-  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+.form-field input:disabled {
+  background: #f1f5f9;
+  color: #64748b;
+  cursor: not-allowed;
+  opacity: 1;
+  box-shadow: none;
 }
 
-.field-error {
-  min-height: 18px;
-  margin-top: 6px;
-  font-size: 0.8rem;
-  color: #dc2626;
-}
-
-.form-status {
-  min-height: 20px;
-  margin-bottom: 14px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #dc2626;
-}
-
-.form-status.is-success {
-  color: #15803d;
+.form-field input:disabled:focus {
+  transform: none;
+  border-color: #dbe4ef;
+  box-shadow: none;
 }
 
 .select-wrap {

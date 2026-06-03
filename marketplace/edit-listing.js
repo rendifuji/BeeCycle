@@ -33,15 +33,8 @@ form.addEventListener("submit", (e) => {
     return;
   }
 
-  if (price === "") {
-    alert("Price is required");
-    return;
-  }
-
-  const numericPrice = Number(price);
-
-  if (Number.isNaN(numericPrice) || numericPrice <= 0) {
-    alert("Price must be a valid number greater than 0");
+  if (price === "" || !/^\d+$/.test(price) || Number(price) <= 0) {
+    alert("Price must be a whole number greater than 0");
     return;
   }
 

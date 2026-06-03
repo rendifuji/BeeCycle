@@ -1,4 +1,20 @@
-<?php include '../includes/admin-check.php'; ?>
+<?php
+  include '../includes/admin-check.php';
+  include '../db_connection.php';
+
+  $userCount = 0;
+  $itemCount = 0;
+
+  $userResult = mysqli_query($conn, "SELECT COUNT(*) AS total FROM user WHERE email != 'admin@gmail.com'");
+  if ($row = mysqli_fetch_assoc($userResult)) {
+    $userCount = $row['total'];
+  }
+
+  $itemResult = mysqli_query($conn, "SELECT COUNT(*) AS total FROM item");
+  if ($row = mysqli_fetch_assoc($itemResult)) {
+    $itemCount = $row['total'];
+  }
+?>
 
 <!doctype html>
 <html lang="en">
@@ -31,14 +47,14 @@
             <div class="users">
               <div>
                 <p>Total Registered Users</p>
-                <span>1,248</span>
+                <span><?php echo number_format($userCount); ?></span>
               </div>
               <img src="../assets/icons/users.svg" />
             </div>
             <div class="listings">
               <div>
                 <p>Total Active Listings</p>
-                <span>853</span>
+                <span><?php echo number_format($itemCount); ?></span>
               </div>
               <img src="../assets/icons/box.svg" />
             </div>

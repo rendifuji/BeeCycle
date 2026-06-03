@@ -59,11 +59,10 @@
                   <label for="binus-email">Binus Email</label>
                   <input
                     id="binus-email"
-                    name="binus-email"
                     type="email"
-                    placeholder="Enter your Binus email"
-                    value="<?php echo($user['email']); ?>"
-                    readonly
+                    value="<?php echo htmlspecialchars($user['email']); ?>"
+                    disabled
+                    aria-disabled="true"
                   />
                 </div>
 
@@ -71,11 +70,10 @@
                   <label for="student-id">Student ID / NIM</label>
                   <input
                     id="student-id"
-                    name="student-id"
                     type="text"
-                    placeholder="Enter your student ID"
-                    value="<?php echo($user['studentID']); ?>"
-                    readonly
+                    value="<?php echo htmlspecialchars(trim($user['studentID'])); ?>"
+                    disabled
+                    aria-disabled="true"
                   />
                 </div>
               </div>

@@ -13,19 +13,18 @@ $result = mysqli_query($conn, $query);
 $row = mysqli_fetch_assoc($result);
 
 if (!$row || $row['itemPhoto'] === null || $row['itemPhoto'] === '') {
-    header('Content-Type: image/jpeg');
-    readfile('../assets/headphones.jpeg');
+    header('HTTP/1.1 404 Not Found');
     exit();
 }
 
 $image = $row['itemPhoto'];
 $imageInfo = @getimagesizefromstring($image);
 
-if ($imageInfo !== false) {
-    header('Content-Type: ' . $imageInfo['mime']);
-} else {
-    header('Content-Type: image/jpeg');
+if ($imageInfo === false) {
+    header('HTTP/1.1 404 Not Found');
+    exit();
 }
 
+header('Content-Type: ' . $imageInfo['mime']);
 echo $image;
 exit();

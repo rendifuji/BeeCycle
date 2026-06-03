@@ -73,7 +73,7 @@
               </div>
             </article>
 
-            <article class="benefit-card">
+            <article>
               <div class="icon">
                 <img src="./assets/People.png" alt="People icon" />
               </div>
@@ -86,7 +86,7 @@
               </div>
             </article>
 
-            <article class="benefit-card">
+            <article>
               <div class="icon">
                 <img src="./assets/Economy.png" alt="Economy icon" />
               </div>
@@ -113,45 +113,45 @@
           </div>
 
           <div class="category-row">
-            <article class="category">
+            <a href="marketplace/homepage.php?category=CA003" class="category">
               <img src="./assets/Textbooks.png" alt="Textbooks" />
               <div class="label">
                 <span class="tag">120+ items</span>
                 <h3>Textbooks</h3>
               </div>
-            </article>
+            </a>
 
-            <article class="category">
+            <a href="marketplace/homepage.php?category=CA001" class="category">
               <img src="./assets/Electronics.png" alt="Electronics" />
               <div class="label">
                 <span class="tag">120+ items</span>
                 <h3>Electronics</h3>
               </div>
-            </article>
+            </a>
 
-            <article class="category">
+            <a href="marketplace/homepage.php?category=CA004" class="category">
               <img src="./assets/DormEssentials.png" alt="Dorm Essentials" />
               <div class="label">
                 <span class="tag">120+ items</span>
                 <h3>Dorm Essentials</h3>
               </div>
-            </article>
+            </a>
 
-            <article class="category">
+            <a href="marketplace/homepage.php?category=CA005" class="category">
               <img src="./assets/ArtSupplies.png" alt="Art Supplies" />
               <div class="label">
                 <span class="tag">120+ items</span>
                 <h3>Art Supplies</h3>
               </div>
-            </article>
+            </a>
 
-            <article class="category">
+            <a href="marketplace/homepage.php?category=CA002" class="category">
               <img src="./assets/Uniforms.png" alt="Uniforms" />
               <div class="label">
                 <span class="tag">120+ items</span>
                 <h3>Uniforms</h3>
               </div>
-            </article>
+            </a>
           </div>
         </div>
       </section>

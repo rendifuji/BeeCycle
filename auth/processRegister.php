@@ -1,57 +1,50 @@
 <?php
 session_start();
 include '../db_connection.php';
-$errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $errors = [];
 
-// Validate Full Name
-if (empty($_POST['fullName'])) {
-    $errors[] = "Full name is required.";
-} else {
-    $fullName = htmlspecialchars(trim($_POST['fullName']));
-}
+    if (empty($_POST['fullName'])) {
+        $errors[] = "Full name is required.";
+    } else {
+        $fullName = htmlspecialchars(trim($_POST['fullName']));
+    }
 
-// Validate Email
-if (empty($_POST['email'])) {
-    $errors[] = "Email Address is required.";
-} elseif (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-    $errors[] = "Invalid Email format.";
-} else {
-    $email = htmlspecialchars(trim($_POST['email']));
+    if (empty($_POST['email'])) {
+        $errors[] = "Email Address is required.";
+    } elseif (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Invalid Email format.";
+    } else {
+        $email = htmlspecialchars(trim($_POST['email']));
 
-    if (!str_ends_with($email, '@binus.ac.id') && !str_ends_with($email, '@binus.edu')) {
+        if (!str_ends_with($email, '@binus.ac.id') && !str_ends_with($email, '@binus.edu')) {
             $errors[] = "Registration is exclusive to @binus.ac.id or @binus.edu email addresses.";
         }
-}
-
-
-// Validate studentID
-if (empty($_POST['studentID'])) {
-    $errors[] = "studentID is required.";
-} else {
-    $studentID = htmlspecialchars(trim($_POST['studentID']));
-    if (!preg_match('/^\d{10}$/', $studentID)) {
-        $errors[] = "Student ID must be a 10-digit number.";
     }
-}
 
-// Validate campus
-if (empty($_POST['campus'])) {
-    $errors[] = "campus location must be selected.";
-} else {
-    $campus = $_POST['campus']; 
-}
+    if (empty($_POST['studentID'])) {
+        $errors[] = "studentID is required.";
+    } else {
+        $studentID = htmlspecialchars(trim($_POST['studentID']));
+        if (!preg_match('/^\d{10}$/', $studentID)) {
+            $errors[] = "Student ID must be a 10-digit number.";
+        }
+    }
 
-// Validate whatsapp
-if (empty($_POST['whatsapp'])) {
-    $errors[] = "phone number is required.";
-} else {
-    $whatsapp = htmlspecialchars(trim($_POST['whatsapp']));
-}
+    if (empty($_POST['campus'])) {
+        $errors[] = "campus location must be selected.";
+    } else {
+        $campus = $_POST['campus'];
+    }
 
-// Validate password
-if (empty($_POST['password'])) {
+    if (empty($_POST['whatsapp'])) {
+        $errors[] = "phone number is required.";
+    } else {
+        $whatsapp = htmlspecialchars(trim($_POST['whatsapp']));
+    }
+
+    if (empty($_POST['password'])) {
         $errors[] = "Password is required.";
     } else {
         $password = $_POST['password'];
@@ -62,8 +55,7 @@ if (empty($_POST['password'])) {
         }
     }
 
-// -----------------
-if (empty($errors)) {
+    if (empty($errors)) {
         $stmt = $conn->prepare("INSERT INTO user (fullName, email, studentID, campus, whatsapp, password) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param(
             "ssssss",
@@ -78,44 +70,26 @@ if (empty($errors)) {
         if ($stmt->execute()) {
             $stmt->close();
             $conn->close();
+            $_SESSION['register_success'] = "Account created! You can log in now.";
+            header('Location: logIn.php');
             exit();
         } else {
-            $errors[] = "Database Error: Registration failed. Please try again.";
+            if ($conn->errno === 1062) {
+                $errors[] = "That email is already registered. Please log in instead.";
+            } else {
+                $errors[] = "Database Error: Registration failed. Please try again.";
+            }
         }
-        
+
         $stmt->close();
     }
-    
+
     $conn->close();
+
+    $_SESSION['register_errors'] = $errors;
+    header('Location: register.php');
+    exit();
 }
-?>
 
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Registration Failed | BeeCycle</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../style.css" />
-    <link rel="stylesheet" href="../auth.css" />
-</head>
-<body>
-
-<?php if (!empty($errors)): ?>
-    <h2>Registration Failed</h2>
-    <ul>
-        <?php foreach ($errors as $error): ?>
-            <li><?= $error ?></li>
-        <?php endforeach; ?>
-    </ul>
-
-    <a href="register.php">Back to Register</a>
-<?php endif; ?>
-
-</body>
-</html>
+header('Location: register.php');
+exit();

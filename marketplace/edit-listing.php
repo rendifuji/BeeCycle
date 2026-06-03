@@ -1,49 +1,96 @@
 <?php
   include '../includes/student-check.php';
   include '../db_connection.php';
-  
-  $itemID= isset($_GET['id']) ? intval($_GET['id']): 0;
-  if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $itemphoto = $_POST['item-photo'];
-    $itemtitle = $_POST['item-title'];
-    $category = $_POST['category'];
-    $condition = $_POST ['condition'];
-    $price = $_POST ['price'];
-    $description = $_POST ['description'];
-    $campuslocation = $_POST ['campus-location'];
-    $meetingspot = $_POST ['meeting-spot'];
+  include '../includes/price-format.php';
 
+  $itemID = isset($_GET['id']) ? intval($_GET['id']) : 0;
+  $studentID = $_SESSION['studentID'];
 
-    if($itemID ===0){
-      die("invalid ID");
-    }else{
-      $query = "UPDATE item SET 
-      itemTitle = '$itemtitle',
-      categoryID = '$category',
-      conditionID = '$condition',
-      price = '$price',
-      description = '$description',
-      COD = '$meetingspot',
-      itemPhoto = '$itemphoto'
-      WHERE itemID = '$itemID'
-      ";
-
-      $p = mysqli_query($conn, $query);
-      if($p){
-        header("Location: ../user/user-profile-dashboard.php");
-      }
-    }
-
-
-
-
-
+  if ($itemID === 0) {
+    die('invalid ID');
   }
 
+  $query = "SELECT * FROM item WHERE itemID = $itemID AND studentID = '$studentID'";
+  $result = mysqli_query($conn, $query);
+  $item = mysqli_fetch_assoc($result);
 
+  if (!$item) {
+    die('Listing not found.');
+  }
 
+  $userQuery = "SELECT campus FROM user WHERE studentID = '$studentID'";
+  $userResult = mysqli_query($conn, $userQuery);
+  $user = mysqli_fetch_assoc($userResult);
 
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $itemtitle = $_POST['item-title'];
+    $category = $_POST['category'];
+    $condition = $_POST['condition'];
+    $price = normalizePriceInput($_POST['price'] ?? '');
+    if (!isValidPriceInput($price)) {
+      die('Invalid price.');
+    }
+    $description = $_POST['description'];
+    $campuslocation = $_POST['campus-location'];
+    $meetingspot = $_POST['meeting-spot'];
 
+    $hasNewPhoto = isset($_FILES['item-photo']) && $_FILES['item-photo']['error'] === UPLOAD_ERR_OK;
+    $itemPhotoBlob = null;
+    if ($hasNewPhoto) {
+      $itemPhotoBlob = file_get_contents($_FILES['item-photo']['tmp_name']);
+    }
+
+    if ($hasNewPhoto && $itemPhotoBlob !== false && strlen($itemPhotoBlob) > 0) {
+      $stmt = $conn->prepare(
+        "UPDATE item SET itemTitle = ?, categoryID = ?, conditionID = ?, price = ?, description = ?, COD = ?, itemPhoto = ?
+         WHERE itemID = ? AND studentID = ?"
+      );
+      $blobParam = null;
+      $stmt->bind_param(
+        'ssssssbis',
+        $itemtitle,
+        $category,
+        $condition,
+        $price,
+        $description,
+        $meetingspot,
+        $blobParam,
+        $itemID,
+        $studentID
+      );
+      $stmt->send_long_data(6, $itemPhotoBlob);
+      $updated = $stmt->execute();
+      $stmt->close();
+    } else {
+      $stmt = $conn->prepare(
+        "UPDATE item SET itemTitle = ?, categoryID = ?, conditionID = ?, price = ?, description = ?, COD = ?
+         WHERE itemID = ? AND studentID = ?"
+      );
+      $stmt->bind_param(
+        'ssssssis',
+        $itemtitle,
+        $category,
+        $condition,
+        $price,
+        $description,
+        $meetingspot,
+        $itemID,
+        $studentID
+      );
+      $updated = $stmt->execute();
+      $stmt->close();
+    }
+
+    if ($campuslocation != '') {
+      $campusQuery = "UPDATE user SET campus = '$campuslocation' WHERE studentID = '$studentID'";
+      mysqli_query($conn, $campusQuery);
+    }
+
+    if ($updated) {
+      header('Location: ../user/user-profile-dashboard.php');
+      exit();
+    }
+  }
 ?>
 
 
@@ -73,14 +120,12 @@
               <p>Update your item's details, price, or upload a new photo.</p>
             </div>
 
-            <form class="edit-listing-form" action="" method="POST" novalidate>
+            <form class="edit-listing-form" action="edit-listing.php?id=<?php echo($itemID); ?>" method="POST" enctype="multipart/form-data" novalidate>
               <div class="edit-listing-layout">
                 <aside class="listing-photo-panel">
                   <div class="listing-photo-preview">
                     <img src="item-image.php?id=<?php echo($itemID); ?>" alt="Listing item preview" />
                   </div>
-
-                  <input type="hidden" name="item-id" value="<?php echo($itemID)?>">
 
                   <div class="form-field form-field--file">
                     <label for="item-photo">Item Photo</label>
@@ -97,6 +142,7 @@
                       name="item-title"
                       type="text"
                       placeholder="Enter your item title"
+                      value="<?php echo($item['itemTitle']); ?>"
                     />
                   </div>
 
@@ -105,12 +151,12 @@
                       <label for="category">Category</label>
                       <div class="select-wrap">
                         <select id="category" name="category">
-                          <option value="" selected disabled>Select a category</option>
-                          <option value="CA003">Textbooks</option>
-                          <option value="CA001">Electronics</option>
-                          <option value="CA004">Dorm Essentials</option>
-                          <option value="CA002">Uniforms</option>
-                          <option value="CA005">Art Supplies</option>
+                          <option value="" disabled>Select a category</option>
+                          <option value="CA003" <?php if ($item['categoryID'] == 'CA003') echo 'selected'; ?>>Textbooks</option>
+                          <option value="CA001" <?php if ($item['categoryID'] == 'CA001') echo 'selected'; ?>>Electronics</option>
+                          <option value="CA004" <?php if ($item['categoryID'] == 'CA004') echo 'selected'; ?>>Dorm Essentials</option>
+                          <option value="CA002" <?php if ($item['categoryID'] == 'CA002') echo 'selected'; ?>>Uniforms</option>
+                          <option value="CA005" <?php if ($item['categoryID'] == 'CA005') echo 'selected'; ?>>Art Supplies</option>
                         </select>
                       </div>
                     </div>
@@ -119,22 +165,25 @@
                       <label for="condition">Condition</label>
                       <div class="select-wrap">
                         <select id="condition" name="condition">
-                          <option value="" selected disabled>Select condition</option>
-                          <option value="CO001">New</option>
-                          <option value="CO002">Like New</option>
-                          <option value="CO003">Used</option>
+                          <option value="" disabled>Select condition</option>
+                          <option value="CO001" <?php if ($item['conditionID'] == 'CO001') echo 'selected'; ?>>New</option>
+                          <option value="CO002" <?php if ($item['conditionID'] == 'CO002') echo 'selected'; ?>>Like New</option>
+                          <option value="CO003" <?php if ($item['conditionID'] == 'CO003') echo 'selected'; ?>>Used</option>
                         </select>
                       </div>
                     </div>
                   </div>
 
                   <div class="form-field">
-                    <label for="price">Price</label>
+                    <label for="price">Price (IDR)</label>
                     <input
                       id="price"
                       name="price"
-                      type="text"
-                      placeholder="Enter your item price"
+                      type="number"
+                      min="1"
+                      step="1"
+                      placeholder="e.g. 150000"
+                      value="<?php echo htmlspecialchars(normalizePriceInput($item['price'])); ?>"
                     />
                   </div>
 
@@ -144,7 +193,7 @@
                       id="description"
                       name="description"
                       placeholder="Describe your item's features, flaws, and reason for selling..."
-                    ></textarea>
+                    ><?php echo($item['description']); ?></textarea>
                   </div>
 
                   <div class="edit-listing-grid">
@@ -152,13 +201,13 @@
                       <label for="campus-location">Campus Location</label>
                       <div class="select-wrap">
                         <select id="campus-location" name="campus-location">
-                          <option value="" selected disabled>Select your campus location</option>
-                          <option>BINUS @ Kemanggisan</option>
-                          <option>BINUS @ Alam Sutera</option>
-                          <option>BINUS @ Bekasi</option>
-                          <option>BINUS @ Malang</option>
-                          <option>BINUS @ Semarang</option>
-                          <option>BINUS @ Bandung</option>
+                          <option value="" disabled>Select your campus location</option>
+                          <option value="Binus@Kemanggisan" <?php if ($user['campus'] == 'Binus@Kemanggisan') echo 'selected'; ?>>Binus@Kemanggisan</option>
+                          <option value="Binus@Alam Sutera" <?php if ($user['campus'] == 'Binus@Alam Sutera') echo 'selected'; ?>>Binus@Alam Sutera</option>
+                          <option value="Binus@Bekasi" <?php if ($user['campus'] == 'Binus@Bekasi') echo 'selected'; ?>>Binus@Bekasi</option>
+                          <option value="Binus@Malang" <?php if ($user['campus'] == 'Binus@Malang') echo 'selected'; ?>>Binus@Malang</option>
+                          <option value="Binus@Semarang" <?php if ($user['campus'] == 'Binus@Semarang') echo 'selected'; ?>>Binus@Semarang</option>
+                          <option value="Binus@Bandung" <?php if ($user['campus'] == 'Binus@Bandung') echo 'selected'; ?>>Binus@Bandung</option>
                         </select>
                       </div>
                     </div>
@@ -170,6 +219,7 @@
                         name="meeting-spot"
                         type="text"
                         placeholder="Enter preferred meeting spot"
+                        value="<?php echo($item['COD']); ?>"
                       />
                     </div>
                   </div>

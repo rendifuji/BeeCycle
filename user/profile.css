@@ -72,8 +72,6 @@ main.profile-dashboard-main {
   font-weight: 600;
   line-height: 1;
   margin: 0 auto;
-  box-shadow: 0 16px 30px rgba(96, 165, 250, 0.22);
-  animation: avatarPulse 4.5s ease-in-out infinite;
 }
 
 .profile-card__edit {
@@ -124,7 +122,7 @@ main.profile-dashboard-main {
 
 .profile-card__row {
   display: grid;
-  grid-template-columns: 56px 1fr;
+  grid-template-columns: auto 1fr;
   column-gap: 18px;
   align-items: start;
 }
@@ -136,6 +134,7 @@ main.profile-dashboard-main {
 }
 
 .profile-card__row dd {
+  margin: 0;
   font-size: 0.98rem;
   color: #6b7280;
   line-height: 1.5;
@@ -348,19 +347,6 @@ main.profile-dashboard-main {
   }
 }
 
-@keyframes avatarPulse {
-  0%,
-  100% {
-    transform: translateY(0) scale(1);
-    box-shadow: 0 16px 30px rgba(96, 165, 250, 0.22);
-  }
-
-  50% {
-    transform: translateY(-4px) scale(1.03);
-    box-shadow: 0 20px 36px rgba(96, 165, 250, 0.28);
-  }
-}
-
 @keyframes profileFloat {
   0%,
   100% {
@@ -376,7 +362,6 @@ main.profile-dashboard-main {
   .profile-dashboard::before,
   .profile-dashboard::after,
   .profile-card,
-  .profile-card__avatar,
   .listing-panel__header,
   .listing-card {
     animation: none;

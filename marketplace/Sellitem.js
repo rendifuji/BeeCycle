@@ -23,12 +23,8 @@ function ValidatePrice() {
         return showError(Price, "PriceError", "Must fill the item's price");
     }
 
-    if (!value.startsWith("Rp")) {
-        return showError(Price, "PriceError", "Price must start with 'Rp'");
-    }
-
-    if (value.includes(",00")) {
-        return showError(Price, "PriceError", "Do not use ',00' format");
+    if (!/^\d+$/.test(value) || Number(value) <= 0) {
+        return showError(Price, "PriceError", "Price must be a whole number greater than 0");
     }
 
     return clearError(Price, "PriceError");

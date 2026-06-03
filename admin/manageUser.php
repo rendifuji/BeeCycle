@@ -1,7 +1,18 @@
 <?php
 include '../includes/admin-check.php';
 include '../db_connection.php';
-$result = $conn->query("SELECT * FROM user");
+
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+$query = "SELECT * FROM user WHERE email != 'admin@gmail.com'";
+
+if ($search !== '') {
+    $s = mysqli_real_escape_string($conn, $search);
+    $query .= " AND (fullName LIKE '%$s%' OR email LIKE '%$s%' OR studentID LIKE '%$s%')";
+}
+
+$query .= ' ORDER BY fullName ASC';
+$result = $conn->query($query);
 ?>
 
 <!doctype html>
@@ -27,10 +38,10 @@ $result = $conn->query("SELECT * FROM user");
               <h1>Manage Users</h1>
               <p>View and moderate all registered Binusian accounts.</p>
             </div>
-            <div class="search">
+            <form method="GET" action="manageUser.php" class="search">
               <img src="../assets/icons/search.svg" alt="search">
-              <input type="text" placeholder="Search Users" />
-            </div>
+              <input type="text" name="search" placeholder="Search Users" value="<?php echo htmlspecialchars($search); ?>" />
+            </form>
           </header>
 
           <div class="table-wrap">
@@ -61,7 +72,7 @@ $result = $conn->query("SELECT * FROM user");
                     </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
-                    <tr><td>No registered accounts found.</td></tr>
+                    <tr><td colspan="5">No registered accounts found.</td></tr>
                 <?php endif; ?>
               </tbody>
             </table>

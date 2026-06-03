@@ -1,5 +1,7 @@
 <?php
-include '../db_connection.php';
+session_start();
+$registerErrors = $_SESSION['register_errors'] ?? [];
+unset($_SESSION['register_errors']);
 ?>
 
 <!doctype html>
@@ -36,31 +38,42 @@ include '../db_connection.php';
           <p class="add-info"><img src="../assets/icons/lock.svg" alt="lock icon">Exclusively for <strong>Binus.ac.id</strong> emails </p>
         </div>
 
-        <form class="register-form" method="post" action="processRegister.php">
+        <form class="register-form" method="post" action="processRegister.php" novalidate>
           <h1>Create an Account</h1>
           <p>Already have an account? <a href="logIn.php">Log in here</a></p>
 
+          <?php if (!empty($registerErrors)) { ?>
+            <ul style="color: red;">
+              <?php foreach ($registerErrors as $error) { ?>
+                <li><?php echo($error); ?></li>
+              <?php } ?>
+            </ul>
+          <?php } ?>
+
           <div class="form-row full-width">
             <label for="fullName">Full Name</label>
-            <input type="text" id="fullName" name="fullName" placeholder="e.g. John Doe" required />
+            <input type="text" id="fullName" name="fullName" placeholder="e.g. John Doe" />
+            <small class="error" id="fullNameError"></small>
           </div>
 
           <div class="form-row two-col">
             <div class="form-group">
               <label for="email">Binus Email Address</label>
-              <input type="email" id="email" name="email" placeholder="name@binus.ac.id" required />
+              <input type="email" id="email" name="email" placeholder="name@binus.ac.id" />
+              <small class="error" id="emailError"></small>
             </div>
 
             <div class="form-group">
               <label for="studentID">Student ID (NIM)</label>
-              <input type="text" id="studentID" name="studentID" placeholder="290XXXXXXXX" required />
+              <input type="text" id="studentID" name="studentID" placeholder="290XXXXXXXX" />
+              <small class="error" id="studentIDError"></small>
             </div>
           </div>
 
           <div class="form-row two-col">
             <div class="form-group">
               <label for="campus">Home Campus</label>
-              <select id="campus" name="campus" required>
+              <select id="campus" name="campus">
                 <option value="">Select your campus...</option>
                 <option value="Binus@Kemanggisan">Binus@Kemanggisan</option>
                 <option value="Binus@Alam Sutera">Binus@Alam Sutera</option>
@@ -69,17 +82,20 @@ include '../db_connection.php';
                 <option value="Binus@Semarang">Binus@Semarang</option>
                 <option value="Binus@Bandung">Binus@Bandung</option>
               </select>
+              <small class="error" id="campusError"></small>
             </div>
 
             <div class="form-group">
               <label for="whatsapp">Whatsapp Number</label>
-              <input type="tel" id="whatsapp" name="whatsapp" placeholder="0812XXXXXXX" required />
+              <input type="tel" id="whatsapp" name="whatsapp" placeholder="0812XXXXXXX" />
+              <small class="error" id="whatsappError"></small>
             </div>
           </div>
 
           <div class="form-row full-width">
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Create a strong password" required />
+            <input type="password" id="password" name="password" placeholder="Create a strong password" />
+            <small class="error" id="passwordError"></small>
           </div>
 
           <button type="submit">Create Account</button>
@@ -88,12 +104,8 @@ include '../db_connection.php';
       </section>
     </main>
 
-    <div class="alert alert-error hidden" id="registerAlert">
-      Please try again.
-    </div>
-
     <?php include '../includes/footer.php'; ?>
-    <!-- <script src="../regist-auth.js" defer></script> -->
+    <script src="register.js" defer></script>
   </body>
 </html> 
 

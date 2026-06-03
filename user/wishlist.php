@@ -1,4 +1,46 @@
-<?php include '../includes/student-check.php'; ?>
+<?php
+  include '../includes/student-check.php';
+  include '../db_connection.php';
+  include '../includes/price-format.php';
+
+  $studentID = $_SESSION['studentID'];
+
+  $query = "SELECT i.itemID, i.itemTitle, i.price, i.COD, i.postedDate, co.conditionName
+            FROM wishlist w
+            INNER JOIN item i ON w.itemID = i.itemID
+            INNER JOIN `condition` co ON i.conditionID = co.conditionID
+            WHERE w.studentID = '$studentID'
+            ORDER BY i.postedDate DESC";
+  $result = mysqli_query($conn, $query);
+  $items = [];
+  while ($row = mysqli_fetch_assoc($result)) {
+    $items[] = $row;
+  }
+
+  function timeAgo($datetime) {
+    $ts = strtotime($datetime);
+    if ($ts === false) {
+      return 'Recently';
+    }
+    $diff = time() - $ts;
+    if ($diff < 60) {
+      return 'Just now';
+    }
+    if ($diff < 3600) {
+      $mins = (int) floor($diff / 60);
+      return $mins . ($mins === 1 ? ' min ago' : ' mins ago');
+    }
+    if ($diff < 86400) {
+      $hrs = (int) floor($diff / 3600);
+      return $hrs . ($hrs === 1 ? ' hr ago' : ' hrs ago');
+    }
+    if ($diff < 604800) {
+      $days = (int) floor($diff / 86400);
+      return $days . ($days === 1 ? ' day ago' : ' days ago');
+    }
+    return date('M j, Y', $ts);
+  }
+?>
 
 <!doctype html>
 <html lang="en">
@@ -18,26 +60,35 @@
   <body>
     <?php include '../includes/navbar.php'; ?>
 
-    <div class="judul">
-      <h1>My Saved Items</h1>
-      <p>Keep track of the things you want to buy later.</p>
-    </div>
+    <main class="wishlist-main">
+      <div class="container wishlist-page">
+        <header class="wishlist-header">
+          <h1>My Saved Items</h1>
+          <p>Keep track of the things you want to buy later.</p>
+        </header>
 
-    <main class="container wishlist-page">
-      <div class="wishlist">
-        <?php for ($i = 0; $i < 6; $i++) { ?>
-        <div class="card">
-          <div class="badge">Like New</div>
-          <div class="heart">&#10084;</div>
-          <img src="../assets/headphones.jpeg" alt="Sony WH-1000XM4 Wireless Headphones" />
-          <h3>Rp 1.850.000</h3>
-          <p class="title">Sony WH-1000XM4 Wireless Headphones</p>
-          <div class="info">
-            <span>Kampus Anggrek</span>
-            <span>2 hrs ago</span>
-          </div>
+        <?php if (count($items) === 0): ?>
+          <p class="wishlist-empty">You have no saved items yet. Open a listing and use the heart on the product page to save it.</p>
+        <?php else: ?>
+        <div class="wishlist">
+          <?php foreach ($items as $item): ?>
+          <?php
+            $badge = $item['conditionName'] === 'LikeNew' ? 'Like New' : $item['conditionName'];
+            $detailUrl = '../marketplace/product-detail.php?id=' . $item['itemID'];
+          ?>
+          <article class="card" onclick="window.location.href='<?php echo($detailUrl); ?>'">
+            <div class="badge"><?php echo($badge); ?></div>
+            <img src="../marketplace/item-image.php?id=<?php echo($item['itemID']); ?>" alt="<?php echo($item['itemTitle']); ?>" />
+            <h3><?php echo htmlspecialchars(formatPriceDisplay($item['price'])); ?></h3>
+            <p class="title"><?php echo htmlspecialchars($item['itemTitle']); ?></p>
+            <div class="info">
+              <span><?php echo($item['COD']); ?></span>
+              <span><?php echo timeAgo($item['postedDate']); ?></span>
+            </div>
+          </article>
+          <?php endforeach; ?>
         </div>
-        <?php } ?>
+        <?php endif; ?>
       </div>
     </main>
 

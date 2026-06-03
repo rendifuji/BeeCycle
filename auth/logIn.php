@@ -1,3 +1,11 @@
+<?php
+session_start();
+$loginErrors = $_SESSION['login_errors'] ?? [];
+unset($_SESSION['login_errors']);
+$registerSuccess = $_SESSION['register_success'] ?? '';
+unset($_SESSION['register_success']);
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -28,15 +36,29 @@
           <p class="add-info"><img src="../assets/icons/lock.svg" alt="lock icon">Exclusively for <strong>Binus.ac.id</strong> emails </p>
         </div>
 
-        <form method="post" action="processLogIn.php" class="login-form">
+        <form method="post" action="processLogIn.php" class="login-form" novalidate>
           <h2>Login</h2>
           <p>New to BeeCycle? <a href="register.php">Create an Account</a></p>
 
+          <?php if ($registerSuccess !== '') { ?>
+            <p style="color: green;"><?php echo($registerSuccess); ?></p>
+          <?php } ?>
+
+          <?php if (!empty($loginErrors)) { ?>
+            <ul style="color: red;">
+              <?php foreach ($loginErrors as $error) { ?>
+                <li><?php echo($error); ?></li>
+              <?php } ?>
+            </ul>
+          <?php } ?>
+
           <label for="email">Binus Email Address</label>
-          <input type="email" id="email" name="email" required placeholder="name@binus.ac.id" />
+          <input type="email" id="email" name="email" placeholder="name@binus.ac.id" />
+          <small class="error" id="emailError"></small>
 
           <label for="password">Password</label>
-          <input type="password" id="password" name="password" required placeholder="*******" />
+          <input type="password" id="password" name="password" placeholder="*******" />
+          <small class="error" id="passwordError"></small>
 
 
           <button type="submit">Log in</button>
@@ -44,12 +66,8 @@
       </section>
     </main>
 
-    <div class="alert alert-error hidden" id="loginAlert">
-      Invalid email or password. Please try again.
-    </div>
-
     <?php include '../includes/footer.php'; ?>
 
-    <!-- <script src="../auth.js" defer></script> -->
+    <script src="logIn.js" defer></script>
   </body>
 </html>

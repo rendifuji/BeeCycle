@@ -51,7 +51,16 @@ $result = $conn->query($query);
                 <?php if ($result && $result->num_rows > 0): ?>
                     <?php while ($row = $result->fetch_assoc()): ?>
                     <tr>
-                        <td><?= htmlspecialchars($row['itemTitle']); ?></td>
+                        <td>
+                          <div class="listing-title-cell">
+                            <img
+                              src="../marketplace/item-image.php?id=<?= (int) $row['itemID']; ?>"
+                              alt=""
+                              class="listing-thumb"
+                            />
+                            <span><?= htmlspecialchars($row['itemTitle']); ?></span>
+                          </div>
+                        </td>
                         <td><?= htmlspecialchars($row['fullName']); ?></td>
                         <td><?= htmlspecialchars($row['categoryName']); ?></td>
                         <td><?= date('F d, Y', strtotime($row['postedDate'])); ?></td>
@@ -63,7 +72,7 @@ $result = $conn->query($query);
                     </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
-                    <tr><td>No items found.</td></tr>
+                    <tr><td colspan="5">No items found.</td></tr>
                 <?php endif; ?>
               </tbody>
             </table>
