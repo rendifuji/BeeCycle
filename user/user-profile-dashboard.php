@@ -27,6 +27,11 @@
 
   $initials = $_SESSION['initials'];
 
+  $listingSuccess = $_SESSION['listing_success'] ?? '';
+  unset($_SESSION['listing_success']);
+  $listingErrors = $_SESSION['listing_errors'] ?? [];
+  unset($_SESSION['listing_errors']);
+
   function timeAgo($datetime) {
     $ts = strtotime($datetime);
     if ($ts === false) {
@@ -104,6 +109,13 @@
               <h2 id="active-listings-title">My Active Listings</h2>
               <a href="../marketplace/sellItem.php" class="listing-panel__action">Add New Item</a>
             </div>
+
+            <?php if ($listingSuccess !== ''): ?>
+            <p class="listing-flash listing-flash--success" role="status"><?php echo htmlspecialchars($listingSuccess); ?></p>
+            <?php endif; ?>
+            <?php foreach ($listingErrors as $listingError): ?>
+            <p class="listing-flash listing-flash--error" role="alert"><?php echo htmlspecialchars($listingError); ?></p>
+            <?php endforeach; ?>
 
             <div class="listing-grid">
               <?php foreach ($listings as $listing): ?>

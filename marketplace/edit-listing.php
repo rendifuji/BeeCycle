@@ -225,8 +225,14 @@
                   </div>
 
                   <div class="edit-listing-actions">
-                    <a href="../user/user-profile-dashboard.php" class="btn-cancel">Cancel</a>
-                    <button type="submit" class="btn-save">Save Changes</button>
+                    <button type="button" class="btn-delete" id="open-delete-modal">
+                      <img src="../assets/icons/trash.svg" alt="" aria-hidden="true" />
+                      Delete Listing
+                    </button>
+                    <div class="edit-listing-actions__primary">
+                      <a href="../user/user-profile-dashboard.php" class="btn-cancel">Cancel</a>
+                      <button type="submit" class="btn-save">Save Changes</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -235,6 +241,23 @@
         </div>
       </section>
     </main>
+
+    <div id="listing-delete-modal" class="listing-delete-modal" hidden>
+      <div class="listing-delete-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="listing-delete-title">
+        <h2 id="listing-delete-title">Delete this listing?</h2>
+        <p>This cannot be undone. The listing will be removed from the marketplace.</p>
+        <form method="POST" action="delete-listing.php" class="listing-delete-modal__form">
+          <input type="hidden" name="itemID" value="<?php echo (int) $itemID; ?>" />
+          <div class="listing-delete-modal__actions">
+            <button type="button" class="btn-modal-cancel" id="close-delete-modal">Cancel</button>
+            <button type="submit" class="btn-modal-delete">
+              <img src="../assets/icons/trash.svg" alt="" aria-hidden="true" />
+              Yes, Delete
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
 
     <?php include '../includes/footer.php'; ?>
     <script src="./edit-listing.js"></script>

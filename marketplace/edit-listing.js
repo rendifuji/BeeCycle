@@ -1,4 +1,32 @@
 const form = document.querySelector(".edit-listing-form");
+const deleteModal = document.getElementById("listing-delete-modal");
+const openDeleteModalBtn = document.getElementById("open-delete-modal");
+const closeDeleteModalBtn = document.getElementById("close-delete-modal");
+
+function openDeleteModal() {
+  deleteModal.hidden = false;
+  closeDeleteModalBtn.focus();
+}
+
+function closeDeleteModal() {
+  deleteModal.hidden = true;
+  openDeleteModalBtn.focus();
+}
+
+openDeleteModalBtn.addEventListener("click", openDeleteModal);
+closeDeleteModalBtn.addEventListener("click", closeDeleteModal);
+
+deleteModal.addEventListener("click", (e) => {
+  if (e.target === deleteModal) {
+    closeDeleteModal();
+  }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !deleteModal.hidden) {
+    closeDeleteModal();
+  }
+});
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
