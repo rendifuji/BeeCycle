@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 $registerErrors = $_SESSION['register_errors'] ?? [];
 unset($_SESSION['register_errors']);
 ?>
